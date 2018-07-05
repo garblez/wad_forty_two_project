@@ -185,3 +185,6 @@ venv.bak/
 
 
 # End of https://www.gitignore.io/api/django,python,pycharm
+
+**/__init__.py
+**/migrations
