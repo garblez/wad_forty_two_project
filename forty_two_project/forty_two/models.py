@@ -42,9 +42,7 @@ class Solution(models.Model):
         super(Solution, self).save(*args, **kwargs)
 
     def __str__(self):
-        return "[{0}\t{1}]\t{2}".format(
-            self.post_time, self.author, self.title
-        )
+        return "\t".join([str(self.post_time), str(self.author), self.title])
 
     class Meta:
-        ordering = ('-post_time', )
+        ordering = ('post_time', )
