@@ -37,9 +37,12 @@ class Solution(models.Model):
 
     tags = TaggableManager()    # Use django-taggit to add and remove simple tags (e.g., programming, calculus etc)
 
+
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
+        self.slug_title = slugify(self.title)
         super(Solution, self).save(*args, **kwargs)
+
+
 
     def __str__(self):
         return "\t".join([str(self.post_time), str(self.author), self.title])
