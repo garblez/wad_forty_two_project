@@ -59,12 +59,12 @@ def add_sub(title):
 def add_sol(user, post_time, title, subject, cause, description):
     a, result = Solution.objects.get_or_create(
         author=user,
-        post_time=post_time,
         title=title,
         subject=subject,
         cause=cause,
         description=description
     )
+    a.post_time = post_time
     a.save()  # Slugs the title and stores it in the slug_title field.
     return a
 
