@@ -1,7 +1,16 @@
 from django.conf.urls import url
 
-from forty_two.views import Index
+from .views import Index, ShowAnswer
 
 urlpatterns = [
-    url(r'^$', Index.as_view(), name="index"),
+    url(
+        r'^solutions/(?P<subject_slug>[\w\-]+)/(?P<solution_slug>[\w\-]+)/',
+        ShowAnswer.as_view(),
+        name="show_answer"
+    ),
+    url(
+        r'^$',
+        Index.as_view(),
+        name="index"
+    ),
 ]

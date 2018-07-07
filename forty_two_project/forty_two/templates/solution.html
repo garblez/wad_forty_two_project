@@ -1,0 +1,21 @@
+{% extends 'project/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Solution: {{ solution.title }}
+{% endblock %}
+
+{% block body_block %}
+    {{ subject.title }}
+
+    {{ author.username}}
+
+    <ul>
+    {% for comment in comments %}
+        <li>
+            {{ comment.author }} {{ comment.content }}
+        </li>
+    {% endfor %}
+    </ul>
+
+{% endblock %}

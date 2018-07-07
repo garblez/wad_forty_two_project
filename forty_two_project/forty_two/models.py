@@ -22,8 +22,8 @@ class Subject(models.Model):
 
 
 class Solution(models.Model):
-    #  The user who posted it.
-    author = models.ForeignKey(User)
+    #  The user who posted it. If the account is deleted, remove their posts too. (May change in future)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
 
     #  Post timestamp
     post_time = models.DateTimeField(null=True)
@@ -31,7 +31,7 @@ class Solution(models.Model):
     #  Short title to encapsulate the solution: also  slugged for use in the URL.
     title = models.CharField(max_length=256)
 
-    slug_title = models.SlugField()  # For use in the URL.
+    title_slug = models.SlugField()  # For use in the URL.
 
     # Refers to which category the solution pertains to: e.g., comp, alt, sci/physics,
     subject = models.ForeignKey(Subject, null=True)
@@ -58,7 +58,7 @@ class Solution(models.Model):
 
 class Comment(models.Model):
     solution = models.ForeignKey(Solution)
-    author = models.ForeignKey(User)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)  # Delete a user's posts when their account is deleted.
     content = models.CharField(max_length=2049)
     post_time = models.DateTimeField()
 

@@ -1,7 +1,7 @@
 import os
 import django
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'forty_two_project.settings')
 django.setup()
 
 # Other import to be found in the main function before populate is called: the above is used to setup and
