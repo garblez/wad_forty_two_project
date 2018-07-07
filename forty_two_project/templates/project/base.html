@@ -8,6 +8,8 @@
         {% endblock %}
     </title>
 
+    <link rel="stylesheet" href="https://unpkg.com/picnic"> <!-- TODO: reference a local copy when you get it. -->
+
     <!-- Block for any additional stylesheets or resources requiring head tags -->
 
     {% block head_block %}
@@ -21,6 +23,10 @@
 {% endblock %}
 
 <!-- We keep this at the end of the page so that visual lag is reduced -->
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
 
 {% block included_js_block %}
 {% endblock %}
