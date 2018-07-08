@@ -1,22 +1,25 @@
 {% extends 'project/base.html' %}
-{% load staticfiles %}
+{% load static %}
 
 {% block title_block %}
     Solution: {{ solution.title }}
 {% endblock %}
 
+<!-- We don't want tabs in the way when we're looking at a solution -->
+{% block navbar_tabs_block %}
+{% endblock %}
+
 {% block body_block %}
-        <div id="test2" class="col s12">
-            {{ subject.title }}
+    {{ subject.title }}
 
-            {{ author.username}}
+    {{ author.username}}
 
-            <ul>
-                {% for comment in comments %}
-                    <li>
-                        {{ comment.author }} {{ comment.content }}
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+    <ul>
+        {% for comment in comments %}
+            <li>
+                {{ comment.author }} {{ comment.content }}
+            </li>
+        {% endfor %}
+    </ul>
+
 {% endblock %}
