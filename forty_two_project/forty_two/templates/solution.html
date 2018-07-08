@@ -6,16 +6,17 @@
 {% endblock %}
 
 {% block body_block %}
-    {{ subject.title }}
+        <div id="test2" class="col s12">
+            {{ subject.title }}
 
-    {{ author.username}}
+            {{ author.username}}
 
-    <ul>
-    {% for comment in comments %}
-        <li>
-            {{ comment.author }} {{ comment.content }}
-        </li>
-    {% endfor %}
-    </ul>
-
+            <ul>
+                {% for comment in comments %}
+                    <li>
+                        {{ comment.author }} {{ comment.content }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
 {% endblock %}
