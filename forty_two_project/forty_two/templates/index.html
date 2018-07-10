@@ -3,3 +3,47 @@
 {% block title_block %}
     42
 {% endblock %}
+
+
+{% block question_tab_block %}
+    <div id="question-page" class="col s12" >
+        <div class="card" style="margin: 1em;">
+            <div class="card-content" style="padding-left:2em; padding-right: 2em;">
+                <form>
+                    <div class="input-field">
+                        <input id="search" type="search" style="padding-left: 3em; padding-bottom: 0.8em; padding-right: 3em;">
+                        <label class="label-icon" for="search">
+                            <i class="material-icons">search</i>
+                        </label>
+                        <i class="material-icons">close</i>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block answer_tab_block %}
+    <div id="answer-page" class="col s12">
+        <div class="card" style="margin: 5em">
+            <div class="card-content">
+                <span class="card-title">Your Solution</span>
+                <form id="solution_form" method="post" action="/solutions/new">
+                    {% csrf_token %}
+                    {% for hidden in form.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
+
+                    {% for field in form.visible_fields %}
+                        {{ field.errors }}
+                        {{ field.help_text }}
+                        {{ field }}
+                    {% endfor %}
+                </form>
+                <button type="submit" form="solution_form" value="Submit" class="waves-effect waves-light btn">
+                    Submit
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

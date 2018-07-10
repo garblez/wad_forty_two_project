@@ -29,15 +29,19 @@ class Solution(models.Model):
     post_time = models.DateTimeField(null=True)
 
     #  Short title to encapsulate the solution: also  slugged for use in the URL.
-    title = models.CharField(max_length=256)
+    title = models.CharField(max_length=144)
 
     title_slug = models.SlugField()  # For use in the URL.
 
     # Refers to which category the solution pertains to: e.g., comp, alt, sci/physics,
     subject = models.ForeignKey(Subject, null=True)
 
+    subject_choice = models.CharField(
+        max_length=144, default="computing science"
+    )
+
     #  A brief explanation of how the solution was attained, what technologies were involved etc.
-    cause = models.CharField(max_length=144)
+    cause = models.CharField(max_length=256)
 
     #  The main body of the solution: the steps involved, tips, outcomes.
     description = models.CharField(max_length=2048)
@@ -46,7 +50,8 @@ class Solution(models.Model):
     tags = TaggableManager()
 
     def save(self, *args, **kwargs):
-        self.slug_title = slugify(self.title)
+        self.title_slug = slugify(self.title)
+        self.author = User.objects.get(username='mak')
         super(Solution, self).save(*args, **kwargs)
 
     def __str__(self):

@@ -70,31 +70,13 @@
 
 <!-- Main block containing page content -->
 
-{% block body_block %}
+{% block question_tab_block %}
+{% endblock %}
 
-    <div id="question-page" class="col s12" >
-        <div class="card" style="margin: 1em;">
-            <div class="card-content" style="padding-left:2em; padding-right: 2em;">
-                <form>
-                    <div class="input-field">
-                        <input id="search" type="search" style="padding-left: 3em; padding-bottom: 0.8em; padding-right: 3em;">
-                        <label class="label-icon" for="search">
-                            <i class="material-icons">search</i>
-                        </label>
-                        <i class="material-icons">close</i>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+{% block answer_tab_block %}
+{% endblock %}
 
-    <div id="answer-page" class="col s12">
-        <div class="card">
-            <div class="card-content">
-
-            </div>
-        </div>
-    </div>
+{% block content_block %}
 {% endblock %}
 
 <!-- We keep this at the end of the page so that visual lag is reduced -->
