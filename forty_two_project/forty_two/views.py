@@ -24,7 +24,7 @@ class Index(View):
 class AddSolution(View):
     # TODO: Add a more appropriate get method to handle get requests to this url
     def get(self, request, *args, **kwargs):
-        return HttpResponseRedirect('index')
+        return HttpResponseRedirect('')
 
     def post(self, request, *args, **kwargs):
         form = SolutionForm(request.POST)
@@ -33,12 +33,12 @@ class AddSolution(View):
 
             form.save(commit=True)  # Enter the form data into the database (title_slug is handled by save())
 
-
-
-            solution = Solution.objects.get(title=request.POST['title'], description=request.POST['description'])
-            solution.subject = Subject.objects.get(title=request.POST['subject_choice'])
-            solution.save()
-            print(solution)
+            if Solution.objects.get(title=request.POST['title']) is not None:
+                solution = Solution.objects.get(title=request.POST['title'], description=request.POST['description'])
+                solution.subject = Subject.objects.get(title=request.POST['subject_choice'])
+                solution.save()
+            else:
+                return render(request, 'page_not_found.html', {}) # Page with given title alerady exists
             return HttpResponseRedirect(solution.subject.title_slug+"/"+solution.title_slug)
 
         else:
@@ -79,3 +79,8 @@ class ShowAnswer(View):
         }
 
         return render(request, 'solution.html', context)
+
+
+class About(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'about.html', {})

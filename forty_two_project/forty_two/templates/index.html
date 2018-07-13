@@ -6,7 +6,8 @@
 
 
 {% block question_tab_block %}
-    <div id="question-page" class="col s12" >
+
+    <div id="question-page" class="container">
         <div class="card" style="margin: 1em;">
             <div class="card-content" style="padding-left:2em; padding-right: 2em;">
                 <form>
@@ -24,26 +25,63 @@
 {% endblock %}
 
 {% block answer_tab_block %}
-    <div id="answer-page" class="col s12">
-        <div class="card" style="margin: 5em">
-            <div class="card-content">
-                <span class="card-title">Your Solution</span>
+    <div id="answer-page" class="container" >
+        <div class="card">
+            <div class="card-content" style="margin: 3em;">
+                <span class="card-title">
+                    <h4>Your Solution</h4>
+                </span>
                 <form id="solution_form" method="post" action="/solutions/new">
                     {% csrf_token %}
                     {% for hidden in form.hidden_fields %}
                         {{ hidden }}
                     {% endfor %}
-
-                    {% for field in form.visible_fields %}
-                        {{ field.errors }}
-                        {{ field.help_text }}
-                        {{ field }}
-                    {% endfor %}
+                    <div class="row">
+                        <div class="col s3">
+                            {{ form.subject_choice.errors }}
+                            {{ form.subject_choice.help_text }}
+                            {{ form.subject_choice }}
+                        </div>
+                        <div class="col s9">
+                            {{ form.title.errors }}
+                            {{ form.title.help_text }}
+                            {{ form.title }}
+                            <label for="#sol-title">Title</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            {{ form.cause.help_text }}
+                            {{ form.cause.errors }}
+                            {{ form.cause }}
+                            <label for="#sol-cause">Cause</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            {{ form.description.help_text }}
+                            {{ form.description.errors }}
+                            {{ form.description }}
+                            <label for="#sol-description">Description</label>
+                        </div>
+                    </div>
                 </form>
-                <button type="submit" form="solution_form" value="Submit" class="waves-effect waves-light btn">
-                    Submit
-                </button>
+                <div style="text-align: center">
+                    <button type="submit" form="solution_form" value="Submit"
+                            class="waves-effect waves-light btn indigo" style="margin-bottom: 1em;">
+                        Submit
+                    </button>
+                </div>
             </div>
         </div>
     </div>
+    </div>
+{% endblock %}
+
+{% block included_js_block %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            M.updateTextFields();
+        });
+    </script>
 {% endblock %}

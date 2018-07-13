@@ -10,16 +10,23 @@
 {% endblock %}
 
 {% block content_block %}
-    {{ subject.title }}
+    <div id="solution-card" class="card" style="margin: 3em;">
+        <div class="card-content">
+        <span class="card-title">
+            {{ solution.title }}
+        </span>
 
-    {{ author.username}}
+        <div>
 
-    <ul>
-        {% for comment in comments %}
-            <li>
-                {{ comment.author }} {{ comment.content }}
-            </li>
-        {% endfor %}
-    </ul>
+        </div>
 
+            <ul>
+                {% for comment in comments %}
+                    <li>
+                        {{ comment.author }} {{ comment.content }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 {% endblock %}

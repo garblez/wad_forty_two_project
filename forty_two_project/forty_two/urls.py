@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from .views import Index, ShowAnswer, AddSolution
+from .views import Index, ShowAnswer, AddSolution, About
 
 urlpatterns = [
     url(
@@ -15,6 +15,11 @@ urlpatterns = [
         r'^solutions/new$',
         AddSolution.as_view(),
         name="add_solution"
+    ),
+    url(
+        r'^about/$',
+        About.as_view(),
+        name='about'
     ),
     url(
         r'^$',

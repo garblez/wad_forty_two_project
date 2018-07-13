@@ -29,7 +29,7 @@ class Solution(models.Model):
     post_time = models.DateTimeField(null=True)
 
     #  Short title to encapsulate the solution: also  slugged for use in the URL.
-    title = models.CharField(max_length=144)
+    title = models.CharField(max_length=144, unique=True)
 
     title_slug = models.SlugField()  # For use in the URL.
 
