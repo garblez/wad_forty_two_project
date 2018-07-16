@@ -16,7 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.conf.urls import url, include
 
+from registration.backends.simple.views import RegistrationView
+
+# Define a custom view for registration that redirects the user to the index page on success
+class CustomRegistrationView(RegistrationView):
+    def get_success_url(self, request, user):
+        return '/home/'
+
+
 urlpatterns = [
-    url('admin/', admin.site.urls),
-    url('', include('forty_two.urls'))
+    url('', include('forty_two.urls')),
+    url(r'^admin/', admin.site.urls),
+    url(r'^accounts/register/$', CustomRegistrationView.as_view(), name='registration_register'),
+    url(r'^accounts/', include('registration.backends.simple.urls')),
+
 ]

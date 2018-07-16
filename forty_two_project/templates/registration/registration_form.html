@@ -1,0 +1,24 @@
+{% extends 'project/base.html' %}
+{% load static %}
+
+{% block content_block %}
+    <div class="container">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">
+                    <h3>Register here!</h3>
+                </span>
+                <form id="registration-form" action="." method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                </form>
+                <div class="text-align: center">
+                    <button form="registration-form" value="Submit" type="submit"
+                            class="btn waves-light waves-effect indigo">
+                        Register
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

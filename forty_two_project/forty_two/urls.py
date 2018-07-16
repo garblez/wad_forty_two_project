@@ -22,7 +22,7 @@ urlpatterns = [
         name='about'
     ),
     url(
-        r'^$',
+        r'^home/$',
         Index.as_view(),
         name="index"
     ),

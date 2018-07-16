@@ -45,8 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
-    'taggit',
+    'taggit',  # Allows us to add tags to solutions
     'forty_two',
+    'registration'  # The registration redux package
 ]
 
 MIDDLEWARE = [
@@ -131,3 +132,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# For registration
+REGISTRATION_OPEN = True
+ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_AUTO_LOGIN = True
+LOGIN_REDIRECT_URL = '/home/'  # Take the user to the index page after they log in
+LOGIN_URL = '/accounts/login/'
