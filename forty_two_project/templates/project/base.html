@@ -46,17 +46,19 @@
                 </div>
             </li>
             <li><a href="{% url 'about' %}">About</a></li>
-            <li><a href="#">Register</a></li>
+            <li>
+                {% if user.is_authenticated %}
+                    {{ user }}
+                {% else %}
+                    <a href="#">
+                        Register
+                    </a>
+                {% endif %}
+            </li>
         </ul>
 
     </div>
     {% block navbar_tabs_block %}
-        <div class="nav-content">
-            <ul class="tabs tabs-transparent">
-                <li class="tab"><a href="#question-page">Question</a></li>
-                <li class="tab"><a class="active" href="#answer-page">Answer</a></li>
-            </ul>
-        </div>
     {% endblock %}
 </nav>
 

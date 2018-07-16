@@ -13,7 +13,8 @@ class Index(View):
 
     def get(self, request, *args, **kwargs):
         return render(request, "index.html", {
-            'form': SolutionForm() # Empty form for the `answer` tab to be POSTed
+            'form': SolutionForm(),  # Empty form for the `answer` tab to be POSTed
+            'subjects': Subject.objects.all()
         })
 
     # TODO: Add a more appropriate post method to handle post requests to the index

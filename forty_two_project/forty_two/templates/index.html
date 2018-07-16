@@ -1,7 +1,26 @@
 {% extends 'project/base.html' %}
+{% load static %}
 
 {% block title_block %}
     42
+{% endblock %}
+
+{% block head_block %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block navbar_tabs_block %}
+    <div class="nav-content">
+        <div class="row" >
+            <div class="col s12 no-padding" style="">
+                <ul class="tabs tabs-fixed-width tabs-transparent" >
+                    {% for subject in subjects %}
+                        <li class="tab"><a href="#{{ subject.title_slug }}-tab">{{ subject.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 
@@ -79,9 +98,4 @@
 {% endblock %}
 
 {% block included_js_block %}
-    <script type="text/javascript">
-        $(document).ready(function(){
-            M.updateTextFields();
-        });
-    </script>
 {% endblock %}
