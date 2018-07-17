@@ -20,63 +20,6 @@
     </div>
 {% endblock %}
 
-
-{% block answer_tab_block %}
-    <!--
-    <div id="answer-page" class="container" >
-        <div class="card">
-            <div class="card-content" style="margin: 3em;">
-                <span class="card-title">
-                    <h4>Your Solution</h4>
-                </span>
-                <form id="solution_form" method="post" action="/solutions/new">
-                    {% csrf_token %}
-                    {% for hidden in form.hidden_fields %}
-                        {{ hidden }}
-                    {% endfor %}
-                    <div class="row">
-                        <div class="col s3">
-                            {{ form.subject_choice.errors }}
-                            {{ form.subject_choice.help_text }}
-                            {{ form.subject_choice }}
-                        </div>
-                        <div class="col s9">
-                            {{ form.title.errors }}
-                            {{ form.title.help_text }}
-                            {{ form.title }}
-                            <label for="#sol-title">Title</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s12">
-                            {{ form.cause.help_text }}
-                            {{ form.cause.errors }}
-                            {{ form.cause }}
-                            <label for="#sol-cause">Cause</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s12">
-                            {{ form.description.help_text }}
-                            {{ form.description.errors }}
-                            {{ form.description }}
-                            <label for="#sol-description">Description</label>
-                        </div>
-                    </div>
-                </form>
-                <div style="text-align: center">
-                    <button type="submit" form="solution_form" value="Submit"
-                            class="waves-effect waves-light btn indigo" style="margin-bottom: 1em;">
-                        Submit
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-    -->
-{% endblock %}
-
 {% block content_block %}
     <div class="container">
         {% for subject in subjects %}
@@ -88,5 +31,62 @@
                 </div>
             </div>
         {% endfor %}
+    </div>
+
+  <!-- Modal Structure -->
+<div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h4>Add new solution</h4>
+        <form id="solution_form" method="post" action="/solutions/new">
+            {% csrf_token %}
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+            <div class="row">
+                <div class="col s3">
+                    {{ form.subject_choice.errors }}
+                    {{ form.subject_choice.help_text }}
+                    {{ form.subject_choice }}
+                </div>
+                <div class="col s9">
+                    {{ form.title.errors }}
+                    {{ form.title.help_text }}
+                    {{ form.title }}
+                    <label for="#sol-title">Title</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    {{ form.cause.help_text }}
+                    {{ form.cause.errors }}
+                    {{ form.cause }}
+                    <label for="#sol-cause">Cause</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    {{ form.description.help_text }}
+                    {{ form.description.errors }}
+                    {{ form.description }}
+                    <label for="#sol-description">Description</label>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <div class="modal-footer">
+        <div class="modal-close" style="text-align: center">
+            <button type="submit" form="solution_form" value="Submit"
+                    class="waves-effect waves-light btn indigo" style="margin-bottom: 1em;">
+                Submit
+            </button>
+        </div>
+    </div>
+</div>
+
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large red modal-trigger" href="#modal1">
+            <i class="large material-icons">add</i>
+        </a>
     </div>
 {% endblock %}

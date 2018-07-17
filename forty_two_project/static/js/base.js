@@ -10,5 +10,13 @@ $(document).ready(function(){
     $('.sidenav').sidenav();  // Add a sidenav menu for when the window is narrow.
     $('select').formSelect();
     $('input#sol-title, textarea#sol-description').characterCounter();
+
+    $('.fixed-action-btn').floatingActionButton();
+
+    $('.modal').modal();
+
+    $('.fixed-action-btn').click(function(){
+        $('.modal').open();
+    });
     M.updateTextFields();
 });
