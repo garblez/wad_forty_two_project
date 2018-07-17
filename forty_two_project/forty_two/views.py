@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.views import View
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
+
 from django.contrib.auth.models import User
 
 
@@ -12,6 +14,7 @@ from .forms import SolutionForm
 class Index(View):
 
     def get(self, request, *args, **kwargs):
+        print(request.user)
         return render(request, "index.html", {
             'form': SolutionForm(),  # Empty form for the `answer` tab to be POSTed
             'subjects': Subject.objects.all()
@@ -31,16 +34,18 @@ class AddSolution(View):
         form = SolutionForm(request.POST)
 
         if form.is_valid():
-
             form.save(commit=True)  # Enter the form data into the database (title_slug is handled by save())
 
             if Solution.objects.get(title=request.POST['title']) is not None:
                 solution = Solution.objects.get(title=request.POST['title'], description=request.POST['description'])
                 solution.subject = Subject.objects.get(title=request.POST['subject_choice'])
+                solution.author = request.user
                 solution.save()
+                return HttpResponseRedirect(solution.subject.title_slug + "/" + solution.title_slug)
             else:
-                return render(request, 'page_not_found.html', {}) # Page with given title alerady exists
-            return HttpResponseRedirect(solution.subject.title_slug+"/"+solution.title_slug)
+                return render(request, 'page_not_found.html', {}) # Page with given title already exists
+
+
 
         else:
             print(form.errors)

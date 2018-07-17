@@ -11,6 +11,8 @@ $(document).ready(function(){
     $('select').formSelect();
     $('input#sol-title, textarea#sol-description').characterCounter();
 
+    $('.tooltipped').tooltip();
+
     $('.fixed-action-btn').floatingActionButton();
 
     $('.modal').modal();

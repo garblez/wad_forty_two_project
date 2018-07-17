@@ -1,12 +1,19 @@
 {% if solutions %}
     {% for solution in solutions %}
         <div class="col s3">
-            <div id="solution-card" class="card">
+            <div id="solution-card" class="card small">
                 <div class="card-content">
-                    <span class="card-title">
-                        {{ solution.title.capitalize }}
+                    <span class="card-title truncate" >
+                        <a href="{% url 'show_answer' subject.title_slug solution.title_slug %}">
+                            <h5 class="tooltipped" data-position="top" data-tooltip="{{ solution.title.capitalize }}">
+                                {{ solution.title.capitalize }}
+                            </h5>
+                        </a>
                     </span>
-                    <p>{{ solution.description }}</p>
+                    {{ solution.cause }}
+                </div>
+                <div class="card-action">
+                    {{ solution.author.username }}
                 </div>
             </div>
         </div>

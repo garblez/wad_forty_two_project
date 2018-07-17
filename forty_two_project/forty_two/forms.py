@@ -39,18 +39,8 @@ class SolutionForm(forms.ModelForm):
         }), label="Description"
     )
 
-
-
-
     post_time = forms.DateTimeField(
         widget=forms.HiddenInput(), initial=datetime.now()
-    )
-
-    # DEBUG
-    author = forms.CharField(
-        max_length=50,
-        initial='mak',
-        widget=forms.HiddenInput()
     )
 
 

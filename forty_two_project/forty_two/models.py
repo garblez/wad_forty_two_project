@@ -23,7 +23,7 @@ class Subject(models.Model):
 
 class Solution(models.Model):
     #  The user who posted it. If the account is deleted, remove their posts too. (May change in future)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
 
     #  Post timestamp
     post_time = models.DateTimeField(null=True)
@@ -51,8 +51,8 @@ class Solution(models.Model):
 
     def save(self, *args, **kwargs):
         self.title_slug = slugify(self.title)
-        self.author = User.objects.get(username='mak')
         super(Solution, self).save(*args, **kwargs)
+
 
     def __str__(self):
         return "\t".join([str(self.post_time), str(self.author), self.title])

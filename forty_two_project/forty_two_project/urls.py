@@ -20,7 +20,7 @@ from registration.backends.simple.views import RegistrationView
 
 # Define a custom view for registration that redirects the user to the index page on success
 class CustomRegistrationView(RegistrationView):
-    def get_success_url(self, request, user):
+    def get_success_url(self, user):
         return '/home/'
 
 
