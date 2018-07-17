@@ -1,12 +1,9 @@
 {% extends 'project/base.html' %}
 {% load static %}
+{% load forty_two_extras %}
 
 {% block title_block %}
     42
-{% endblock %}
-
-{% block head_block %}
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
 {% endblock %}
 
 {% block navbar_tabs_block %}
@@ -15,7 +12,7 @@
             <div class="col s12 no-padding" style="">
                 <ul class="tabs tabs-fixed-width tabs-transparent" >
                     {% for subject in subjects %}
-                        <li class="tab"><a href="#{{ subject.title_slug }}-tab">{{ subject.title }}</a></li>
+                        <li class="tab"><a href="#{{ subject.title_slug }}">{{ subject.title }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -25,6 +22,7 @@
 
 
 {% block answer_tab_block %}
+    <!--
     <div id="answer-page" class="container" >
         <div class="card">
             <div class="card-content" style="margin: 3em;">
@@ -76,7 +74,19 @@
         </div>
     </div>
     </div>
+    -->
 {% endblock %}
 
-{% block included_js_block %}
+{% block content_block %}
+    <div class="container">
+        {% for subject in subjects %}
+            <div id="{{ subject.title_slug }}">
+                <h3>{{ subject.title.capitalize }}</h3>
+                <div class="row">
+                    <!-- Put a template tag here -->
+                    {% get_subject_solutions subject %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

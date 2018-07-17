@@ -26,12 +26,13 @@
 
 <nav class="nav-extended indigo">
 
+    {% if user.is_authenticated %}
     <ul id="nav-profile-dropdown" class="dropdown-content">
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
+        <li><a href="{% url 'profile' user.username %}">Profile</a></li>
         <li class="divider"></li>
         <li><a href="{% url 'auth_logout' %}?next=/home/">Log out</a></li>
     </ul>
+    {% endif %}
 
     <div class="nav-wrapper">
         <a href="{% url 'index' %}" class="brand-logo">
@@ -56,6 +57,7 @@
                 {% if user.is_authenticated %}
                     <li><a class="dropdown-trigger" href="#"
                                 data-target="nav-profile-dropdown">
+                        <i class="material-icons left">account_box</i>
                         {{ user }}
                         <i class="material-icons right">arrow_drop_down</i>
                     </a></li>
@@ -67,9 +69,9 @@
                     </li>
                 {% endif %}
         </ul>
-
-
     </div>
+
+
     {% block navbar_tabs_block %}
     {% endblock %}
 </nav>

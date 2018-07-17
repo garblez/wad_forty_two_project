@@ -85,3 +85,35 @@ class ShowAnswer(View):
 class About(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'about.html', {})
+
+# View for showing a user's profile page. If it's the user's own profile page, add in extra features (such as settings,
+# profile edit.
+class Profile(View):
+    def get(self, request, username, *args, **kwargs):
+        try:
+            user_arg = User.objects.get(username=username)
+            context = {
+                'profile':
+                    {
+                        'username': user_arg.username,
+                        'email': user_arg.email
+                    }
+            }
+            return render(request, 'profile.html', context)
+
+        except ObjectDoesNotExist:
+            print("Could not find user.")
+            return Http404()
+
+
+class SubjectSolutions(View):
+    def get(self, request, subject_slug, *args, **kwargs):
+        try:
+            subject = Subject.objects.get(title_slug=subject_slug)
+
+            return render(request, 'subject_solutions.html', {
+                'page': {'subject': subject},
+                'subjects': Subject.objects.all()
+            })
+        except ObjectDoesNotExist:
+            return Http404()

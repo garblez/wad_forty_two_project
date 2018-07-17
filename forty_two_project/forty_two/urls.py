@@ -1,12 +1,18 @@
 from django.conf.urls import url
 
-from .views import Index, ShowAnswer, AddSolution, About
+from .views import Index, ShowAnswer, AddSolution, About, Profile, SubjectSolutions
 
 urlpatterns = [
     url(
         r'^solutions/(?P<subject_slug>[\w\-]+)/(?P<solution_slug>[\w\-]+)/',
         ShowAnswer.as_view(),
         name="show_answer"
+    ),
+
+    url(
+        r'^solutions/(?P<subject_slug>[\w\-]+)/$',
+        SubjectSolutions.as_view(),
+        name="show_subject"
     ),
 
     # This is used purely to process a new solution post by a user: they will be redirected to the solution page
@@ -22,8 +28,14 @@ urlpatterns = [
         name='about'
     ),
     url(
-        r'^home/$',
+        r'^$|^home/$',
         Index.as_view(),
         name="index"
     ),
+    url(
+        r'^profile/(?P<username>[\w\-]+)$',
+        Profile.as_view(),
+        name='profile'
+    )
+
 ]
