@@ -27,11 +27,11 @@
 <nav class="nav-extended indigo">
 
     {% if user.is_authenticated %}
-    <ul id="nav-profile-dropdown" class="dropdown-content">
-        <li><a href="{% url 'profile' user.username %}">Profile</a></li>
-        <li class="divider"></li>
-        <li><a href="{% url 'auth_logout' %}?next=/home/">Log out</a></li>
-    </ul>
+        <ul id="nav-profile-dropdown" class="dropdown-content">
+            <li><a href="{% url 'profile' user.username %}">Profile</a></li>
+            <li class="divider"></li>
+            <li><a href="{% url 'auth_logout' %}?next=/home/">Log out</a></li>
+        </ul>
     {% endif %}
 
     <div class="nav-wrapper">
@@ -54,20 +54,20 @@
                 </div>
             </li>
             <li><a href="{% url 'about' %}">About</a></li>
-                {% if user.is_authenticated %}
-                    <li><a class="dropdown-trigger" href="#"
-                                data-target="nav-profile-dropdown">
-                        <i class="material-icons left">account_box</i>
-                        {{ user }}
-                        <i class="material-icons right">arrow_drop_down</i>
-                    </a></li>
-                {% else %}
-                    <li>
+            {% if user.is_authenticated %}
+                <li><a class="dropdown-trigger" href="#"
+                       data-target="nav-profile-dropdown">
+                    <i class="material-icons left">account_box</i>
+                    {{ user }}
+                    <i class="material-icons right">arrow_drop_down</i>
+                </a></li>
+            {% else %}
+                <li>
                     <a href="{% url 'auth_login' %}">
                         Log in
                     </a>
-                    </li>
-                {% endif %}
+                </li>
+            {% endif %}
         </ul>
     </div>
 
@@ -77,6 +77,17 @@
 </nav>
 
 <ul class="sidenav" id="mobile-demo">
+    {% block sidenav_subjects_block %}
+
+    {% endblock %}
+    <li class="divider"></li>
+    {% if user.is_authenticated %}
+        <li><a href="{% url 'profile' user.username %}">{{ user.username }}</a></li>
+        <li><a href="{% url 'auth_logout' %}">Log out</a></li>
+    {% else %}
+        <li><a href="{% url 'auth_login' %}">Log in</a></li>
+    {% endif %}
+    <li><a href="{% url 'about' %}">About</a></li>
 </ul>
 
 
@@ -91,8 +102,10 @@
 {% block answer_tab_block %}
 {% endblock %}
 
+<div style="margin: 1em;">
 {% block content_block %}
 {% endblock %}
+</div>
 
 <!-- We keep this at the end of the page so that visual lag is reduced -->
 <script src="{% static 'js/jquery.js' %}"></script>

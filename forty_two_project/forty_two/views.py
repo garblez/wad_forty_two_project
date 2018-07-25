@@ -14,7 +14,6 @@ from .forms import SolutionForm
 class Index(View):
 
     def get(self, request, *args, **kwargs):
-        print(request.user)
         return render(request, "index.html", {
             'form': SolutionForm(),  # Empty form for the `answer` tab to be POSTed
             'subjects': Subject.objects.all()
@@ -26,31 +25,31 @@ class Index(View):
 
 
 class AddSolution(View):
-    # TODO: Add a more appropriate get method to handle get requests to this url
+    # If we receive a GET to the solution/new/ then show a 404. Also for handling invalid forms (for now at least)
     def get(self, request, *args, **kwargs):
-        return HttpResponseRedirect('')
+        return render(request, 'page_not_found.html', {})
 
     def post(self, request, *args, **kwargs):
         form = SolutionForm(request.POST)
 
         if form.is_valid():
+            print("Form was valid!")  # DEBUG
+
             form.save(commit=True)  # Enter the form data into the database (title_slug is handled by save())
 
             if Solution.objects.get(title=request.POST['title']) is not None:
                 solution = Solution.objects.get(title=request.POST['title'], description=request.POST['description'])
                 solution.subject = Subject.objects.get(title=request.POST['subject_choice'])
                 solution.author = request.user
+                print(request.user)
                 solution.save()
                 return HttpResponseRedirect(solution.subject.title_slug + "/" + solution.title_slug)
             else:
                 return render(request, 'page_not_found.html', {}) # Page with given title already exists
-
-
-
         else:
+            print("Form was not valid!")  # DEBUG
             print(form.errors)
-
-
+            return HttpResponseRedirect('')  # Call this View's get() to show page_not_found
 
 
 class ShowAnswer(View):

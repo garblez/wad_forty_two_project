@@ -53,7 +53,6 @@ class Solution(models.Model):
         self.title_slug = slugify(self.title)
         super(Solution, self).save(*args, **kwargs)
 
-
     def __str__(self):
         return "\t".join([str(self.post_time), str(self.author), self.title])
 

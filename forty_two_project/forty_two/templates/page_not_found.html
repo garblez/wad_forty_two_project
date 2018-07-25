@@ -6,14 +6,16 @@
 {% endblock %}
 
 
-{% block body_block %}
+{% block content_block %}
     <h1>
-        Page not found for "{{ page.name }}"
+        Page not found {% if page %} for "{{ page.name }}" {% endif %}
     </h1>
-
+    {% if page %}
     <p>
         Sorry, there's no {{ page.type }} called "{{ page.name }}".
+
     </p>
+    {% endif %}
     <p>
         Try returning to the home page and searching again.
     </p>

@@ -5,24 +5,35 @@
     Solution: {{ solution.title }}
 {% endblock %}
 
-<!-- We don't want tabs in the way when we're looking at a solution -->
-{% block navbar_tabs_block %}
-{% endblock %}
 
 {% block content_block %}
     <div id="solution-card" class="card" style="margin: 3em;">
         <div class="card-content">
-        <span class="card-title">
-            {{ solution.author.username }}: {{ solution.title }}
-        </span>
+            <div class="card-title">
+                <div class="row">
+                    <div class="col s3">
+                        <h5>{{ solution.author }}</h5>
+                    </div>
+
+                    <div class="col s9">
+                        <h5>{{ solution.title }}</h5>
+                    </div>
+                </div>
+            </div>
+            <p>{{ solution.cause }}
+                {{ solution.description }}</p>
 
 
             <ul>
-                {% for comment in comments %}
-                    <li>
-                        {{ comment.author }} {{ comment.content }}
-                    </li>
-                {% endfor %}
+                {% if comments %}
+                    {% for comment in comments %}
+                        <li><i>
+                            {{ comment.author }} {{ comment.content }}
+                        </i></li>
+                    {% endfor %}
+                {% else %}
+                    <i>There are no comments for this solution.</i>
+                {% endif %}
             </ul>
         </div>
     </div>

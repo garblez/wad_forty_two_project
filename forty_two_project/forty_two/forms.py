@@ -1,5 +1,6 @@
 from django import forms
 from datetime import datetime
+from taggit.forms import TagWidget, TagField
 
 from .models import Solution, Subject
 
@@ -23,6 +24,7 @@ class SolutionForm(forms.ModelForm):
         }),
         label="Title"
     )
+
     cause = forms.CharField(
         max_length=256, widget=forms.Textarea(attrs={
             'class': 'input-field col s12 materialize-textarea validate',
@@ -46,11 +48,12 @@ class SolutionForm(forms.ModelForm):
 
     class Meta:
         model = Solution
-        fields = ("title", 'cause', 'description', 'subject_choice')
+        fields = ("title", 'cause', 'description', 'subject_choice', )
         help_texts = {
             'title': 'Give your solution a title',
             'subject_choice': 'Choose subject',
             'cause': 'Cause',
-            'description': 'Description'
+            'description': 'Description',
+            'tags': 'Tags'
         }
         labels = help_texts
