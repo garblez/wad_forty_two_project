@@ -2,6 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 
+from forty_two_project.settings import MEDIA_ROOT
+from os.path import join
+
+
 from taggit.managers import TaggableManager
 
 
@@ -71,3 +75,14 @@ class Comment(models.Model):
 
     class Meta:
         verbose_name_plural = "comments"
+
+
+class UserProfile(models.Model):
+    user = models.ForeignKey(User)
+    description = models.CharField(max_length=256)
+
+    photo = models.ImageField(blank=True, upload_to='profile')
+
+    class Meta:
+        verbose_name = "profile"
+        verbose_name_plural = "profiles"

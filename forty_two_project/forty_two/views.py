@@ -1,13 +1,12 @@
 from django.shortcuts import render
 from django.views import View
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import Http404, HttpResponseRedirect
-from django.contrib.auth.decorators import login_required
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 
 from django.contrib.auth.models import User
 
 
-from .models import Solution, Subject, Comment
+from .models import Solution, Subject, Comment, UserProfile
 from .forms import SolutionForm
 
 
@@ -53,7 +52,7 @@ class AddSolution(View):
 
 
 class ShowAnswer(View):
-
+    # Display a solution's page.
     def get(self, request, subject_slug, solution_slug, *args, **kwargs):
 
         not_found_context = {}
@@ -94,20 +93,24 @@ class About(View):
 # profile edit.
 class Profile(View):
     def get(self, request, username, *args, **kwargs):
-        try:
-            user_arg = User.objects.get(username=username)
-            context = {
-                'profile':
-                    {
-                        'username': user_arg.username,
-                        'email': user_arg.email
-                    }
-            }
-            return render(request, 'profile.html', context)
 
-        except ObjectDoesNotExist:
-            print("Could not find user.")
-            return Http404()
+        try:
+            user_object = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return HttpResponse("The requested user does not exist. Sorry!")  # Display the error to the user for now.
+
+        # We requested a valid user who should have a valid profile to display. If not (for whatever reason)
+        # we necessarily generate a profile to display as one does not already exist.
+        profile_object, just_created = UserProfile.objects.get_or_create(user=user_object)
+
+        context = {
+            'profile': profile_object
+        }
+
+        return render(request, 'profile.html', {'profile': profile_object})
+
+
+
 
 
 class SubjectSolutions(View):

@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf.urls import url, include
+from django.conf.urls.static import static
+from django.conf import settings
 
 from registration.backends.simple.views import RegistrationView
 
@@ -29,5 +31,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/register/$', CustomRegistrationView.as_view(), name='registration_register'),
     url(r'^accounts/', include('registration.backends.simple.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # Only for DEBUG: change on deployment.
 
-]
+
