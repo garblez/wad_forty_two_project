@@ -2,9 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 
-from forty_two_project.settings import MEDIA_ROOT
-from os.path import join
-
 
 from taggit.managers import TaggableManager
 
@@ -33,7 +30,7 @@ class Solution(models.Model):
     post_time = models.DateTimeField(null=True)
 
     #  Short title to encapsulate the solution: also  slugged for use in the URL.
-    title = models.CharField(max_length=144, unique=True)
+    title = models.CharField(max_length=40, unique=True)
 
     title_slug = models.SlugField()  # For use in the URL.
 
@@ -41,14 +38,14 @@ class Solution(models.Model):
     subject = models.ForeignKey(Subject, null=True)
 
     subject_choice = models.CharField(
-        max_length=144, default="computing science"
+        max_length=64, default="computing science"
     )
 
     #  A brief explanation of how the solution was attained, what technologies were involved etc.
-    cause = models.CharField(max_length=256)
+    cause = models.CharField(max_length=80)
 
     #  The main body of the solution: the steps involved, tips, outcomes.
-    description = models.CharField(max_length=2048)
+    description = models.CharField(max_length=512)
 
     # Use django-taggit to add and remove simple tags (e.g., programming, calculus etc)
     tags = TaggableManager()
@@ -67,7 +64,7 @@ class Solution(models.Model):
 class Comment(models.Model):
     solution = models.ForeignKey(Solution)
     author = models.ForeignKey(User, on_delete=models.CASCADE)  # Delete a user's posts when their account is deleted.
-    content = models.CharField(max_length=2049)
+    content = models.CharField(max_length=256)
     post_time = models.DateTimeField()
 
     def __str__(self):

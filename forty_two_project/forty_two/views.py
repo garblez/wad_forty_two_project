@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.views import View
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import Http404, HttpResponseRedirect, HttpResponse
-
+from django.http import Http404, HttpResponseRedirect, HttpResponse, HttpResponseForbidden
+from django.utils.text import slugify
 from django.contrib.auth.models import User
 
 
@@ -11,10 +11,9 @@ from .forms import SolutionForm
 
 
 class Index(View):
-
     def get(self, request, *args, **kwargs):
         return render(request, "index.html", {
-            'form': SolutionForm(),  # Empty form for the `answer` tab to be POSTed
+            'form': SolutionForm(),  # Empty form for the `answer` modal to be POSTed
             'subjects': Subject.objects.all()
         })
 
@@ -44,7 +43,7 @@ class AddSolution(View):
                 solution.save()
                 return HttpResponseRedirect(solution.subject.title_slug + "/" + solution.title_slug)
             else:
-                return render(request, 'page_not_found.html', {}) # Page with given title already exists
+                return render(request, 'page_not_found.html', {})  # Page with given title already exists
         else:
             print("Form was not valid!")  # DEBUG
             print(form.errors)
@@ -85,9 +84,12 @@ class ShowAnswer(View):
         return render(request, 'solution.html', context)
 
 
+# Serve the about page
 class About(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'about.html', {})
+
+
 
 # View for showing a user's profile page. If it's the user's own profile page, add in extra features (such as settings,
 # profile edit.
@@ -103,14 +105,7 @@ class Profile(View):
         # we necessarily generate a profile to display as one does not already exist.
         profile_object, just_created = UserProfile.objects.get_or_create(user=user_object)
 
-        context = {
-            'profile': profile_object
-        }
-
         return render(request, 'profile.html', {'profile': profile_object})
-
-
-
 
 
 class SubjectSolutions(View):
@@ -124,3 +119,13 @@ class SubjectSolutions(View):
             })
         except ObjectDoesNotExist:
             return Http404()
+
+
+class Settings(View):
+    def get(self, request, username_slug, *args, **kwargs):
+        if slugify(request.user.username) != username_slug:
+            return HttpResponseForbidden("You cannot access this page unless you are signed in as that user.")
+        return render(request, 'settings.html', {})
+
+    def post(self, request, *args, **kwargs):
+        return Http404()

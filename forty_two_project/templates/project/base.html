@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+{% load forty_two_extras %}
 
 <html lang="en">
 <head>
@@ -29,8 +30,8 @@
 
     {% if user.is_authenticated %}
         <ul id="nav-profile-dropdown" class="dropdown-content">
-            <li><a href="{% url 'profile' user.username %}">Profile</a></li>
-            <li><a href="{% url 'settings' %}">Settings</a></li>
+            <li><a href="{% url 'profile' user.username|slugify %}">Profile</a></li>
+            <li><a href="{% url 'settings' user.username|slugify %}">Settings</a></li>
             <li class="divider"></li>
             <li><a href="{% url 'auth_logout' %}?next=/home/">Log out</a></li>
         </ul>
@@ -44,17 +45,6 @@
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li>
-                <div>
-                    <form>
-                        <div class="input-field">
-                            <input id="search" type="search" required>
-                            <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                            <i class="material-icons">close</i>
-                        </div>
-                    </form>
-                </div>
-            </li>
             <li><a href="{% url 'about' %}">About</a></li>
             {% if user.is_authenticated %}
                 <li><a class="dropdown-trigger" href="#"
@@ -73,7 +63,7 @@
         </ul>
     </div>
 
-
+    <!-- Used for the category tabs required for selecting which subject to view on the website index. -->
     {% block navbar_tabs_block %}
     {% endblock %}
 </nav>
@@ -97,13 +87,6 @@
 
 
 <!-- Main block containing page content -->
-
-{% block question_tab_block %}
-{% endblock %}
-
-{% block answer_tab_block %}
-{% endblock %}
-
 <div style="margin: 1em;">
 {% block content_block %}
 {% endblock %}

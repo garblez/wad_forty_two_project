@@ -21,10 +21,20 @@
 {% endblock %}
 
 {% block content_block %}
+
     <div class="container">
+        <div id="sol-search">
+            <div class="input-field card">
+                <div class="card-content">
+                    <input id="search" type="search">
+                    <label class="label-icon" for="search">
+                    </label>
+                    <i class="material-icons" style="padding-top: 4px; padding-right: 4px">close</i>
+                </div>
+            </div>
+        </div>
         {% for subject in subjects %}
             <div id="{{ subject.title_slug }}">
-                <h3>{{ subject.title.capitalize }}</h3>
                 <div class="row">
                     <!-- Put a template tag here -->
                     {% get_subject_solutions subject %}
@@ -86,9 +96,9 @@
     </div>
 
     {% if user.is_authenticated %}
-        <div id="fab-new-sol" class="fixed-action-btn">
+        <div class="fixed-action-btn">
             <a class="btn-floating btn-large red modal-trigger" href="#modal1">
-                <i class="large material-icons">add</i>
+                <i id="fab-new-sol" class="large material-icons">add</i>
             </a>
         </div>
     {% endif %}

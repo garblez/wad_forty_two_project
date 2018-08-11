@@ -1,11 +1,11 @@
 {% if solutions %}
     {% for solution in solutions %}
-        <div class="col s3">
-            <div id="solution-card" class="card small">
+        <div class="" style="float:left; padding: 1em;">
+            <div id="solution-card" class="card text-flow">
                 <div class="card-content">
-                    <span class="card-title truncate" >
-                        <a href="{% url 'show_answer' subject.title_slug solution.title_slug %}">
-                            <h5 class="tooltipped" data-position="top" data-tooltip="{{ solution.title.capitalize }}">
+                    <span class="card-title truncate">
+                        <a class="flow-text" href="{% url 'show_answer' subject.title_slug solution.title_slug %}">
+                            <h5 class="tooltipped flow-text" data-position="top" data-tooltip="{{ solution.title.capitalize }}">
                                 {{ solution.title.capitalize }}
                             </h5>
                         </a>

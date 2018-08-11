@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from .views import Index, ShowAnswer, AddSolution, About, Profile, SubjectSolutions
+from .views import Index, ShowAnswer, AddSolution, About, Profile, SubjectSolutions, Settings
 
 urlpatterns = [
     url(
@@ -33,9 +33,13 @@ urlpatterns = [
         name="index"
     ),
     url(
-        r'^profile/(?P<username>[\w\-]+)$',
+        r'^profile/(?P<username>[\w\-]+)/$',
         Profile.as_view(),
         name='profile'
+    ),
+    url('^profile/(?P<username_slug>[\w\-]+)/settings',
+        Settings.as_view(),
+        name='settings'
     )
 
 ]

@@ -23,4 +23,17 @@ $(document).ready(function(){
         $('.modal').open();
     });
     M.updateTextFields();  // Make form fields responsive (show number of characters used etc.).
+
+
+    $('#fab-new-sol').hover(function(){
+        var angle = ($('#fab-new-sol').data('angle')) || 0;
+        angle -= 45;
+        $('#fab-new-sol').css({'transform': 'rotate('+angle+'deg)'});
+        $('#fab-new-sol').data('angle', angle);
+    }, function(){
+        var angle = ($('#fab-new-sol').data('angle')) || 0;
+        angle += 45;
+        $('#fab-new-sol').css({'transform': 'rotate('+angle+'deg)'});
+        $('#fab-new-sol').data('angle', angle);
+    });
 });

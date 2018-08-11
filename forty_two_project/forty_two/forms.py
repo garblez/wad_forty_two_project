@@ -17,27 +17,28 @@ class SolutionForm(forms.ModelForm):
     )
 
     title = forms.CharField(
-        max_length=144, widget=forms.TextInput(attrs={
+        max_length=40, widget=forms.TextInput(attrs={
             'class': 'input-field col s8 validate',
             'id': 'sol-title',
-            'data-length': '144'
+            'data-length': '40'
         }),
         label="Title"
     )
 
     cause = forms.CharField(
-        max_length=256, widget=forms.Textarea(attrs={
+        max_length=80, widget=forms.Textarea(attrs={
             'class': 'input-field col s12 materialize-textarea validate',
-            'id': 'sol-cause'
+            'id': 'sol-cause',
+            'data-length': '80'
         }),
         label="Cause"
-
     )
+
     description = forms.CharField(
-        max_length=2048, widget=forms.Textarea(attrs={
+        max_length=512, widget=forms.Textarea(attrs={
             'class': 'input-field col s12 materialize-textarea validate',
             'id': 'sol-description',
-            'data-length': '2048'
+            'data-length': '512'
         }), label="Description"
     )
 
