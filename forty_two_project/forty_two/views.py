@@ -36,7 +36,7 @@ class AddSolution(View):
             form.save(commit=True)  # Enter the form data into the database (title_slug is handled by save())
 
             if Solution.objects.get(title=request.POST['title']) is not None:
-                solution = Solution.objects.get(title=request.POST['title'], description=request.POST['description'])
+                solution = Solution.objects.get(title=request.POST['title'])
                 solution.subject = Subject.objects.get(title=request.POST['subject_choice'])
                 solution.author = request.user
                 print(request.user)
