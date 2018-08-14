@@ -78,12 +78,19 @@ class Comment(models.Model):
         verbose_name_plural = "comments"
 
 
+def user_directory_path(instance, filename):
+    file_extension = filename.split('.')[-1]  # Get the correct file extension for the uploaded file
+    # Store the uploaded file in media/profile/<username-slug>/<filename>
+    return "profile/{0}/{1}".format(slugify(instance.user.username), filename)
+
+
 class UserProfile(models.Model):
     user = models.ForeignKey(User)
-    description = models.CharField(max_length=256)
+    description = models.CharField(max_length=256, blank=True)
 
-    photo = models.ImageField(blank=True, upload_to='profile')
+    photo = models.ImageField(blank=True, upload_to=user_directory_path)
 
     class Meta:
         verbose_name = "profile"
         verbose_name_plural = "profiles"
+

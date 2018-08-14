@@ -13,7 +13,8 @@
                     <div class="col s12 center" style="margin-top: 1em;">
 
                         {% if profile.photo %}
-                            <img class="responsive-img" src="{{ profile.photo.path }}"/>
+                            <img class="responsive-img" src="{{ profile.photo.url }}"
+                                 alt="{{ profile.photo.name }}" width="33%"/>
                         {% else %}
                             <i class="large material-icons">account_box</i>
                         {% endif %}

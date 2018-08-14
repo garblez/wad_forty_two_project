@@ -5,17 +5,23 @@ from django.http import Http404, HttpResponseRedirect, HttpResponse, HttpRespons
 from django.utils.text import slugify
 from django.contrib.auth.models import User
 from django.utils.datetime_safe import datetime
+from django.core.files.storage import FileSystemStorage
 
 from .models import Solution, Subject, Comment, UserProfile
-from .forms import SolutionForm, CommentForm
+from .forms import SolutionForm, CommentForm, UserProfileForm
 
 
 class Index(View):
     def get(self, request, *args, **kwargs):
-        return render(request, "index.html", {
+        context = {
             'form': SolutionForm(),  # Empty form for the `answer` modal to be POSTed
             'subjects': Subject.objects.all()
-        })
+        }
+
+        if request.user and request.user.is_authenticated():
+            context['user_photo'] = UserProfile.objects.get(user=request.user).photo
+
+        return render(request, "index.html", context)
 
     # TODO: Add a more appropriate post method to handle post requests to the index
     def post(self, request, *args, **kwargs):
@@ -146,11 +152,31 @@ class SubjectSolutions(View):
             return Http404()
 
 
+
 class Settings(View):
     def get(self, request, username_slug, *args, **kwargs):
         if slugify(request.user.username) != username_slug:
             return HttpResponseForbidden("You cannot access this page unless you are signed in as that user.")
-        return render(request, 'settings.html', {})
+        context = {
+            'profile_form': UserProfileForm(),
+            'user_profile': UserProfile.objects.get(user=request.user)
+        }
+
+        return render(request, 'settings.html', context)
 
     def post(self, request, *args, **kwargs):
-        return Http404()
+        user_profile_form = UserProfileForm(request.POST, request.FILES)
+        if user_profile_form.is_valid():
+            user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+
+            # Change the user's photo only if we supply it in POST
+            if user_profile_form.cleaned_data['photo']:
+                user_profile.photo = user_profile_form.cleaned_data['photo']
+
+            # Only change the profile description if we've POSTed any changes.
+            if user_profile_form.cleaned_data['description']:
+                user_profile.description = user_profile_form.cleaned_data['description']
+
+            user_profile.save()
+            return HttpResponseRedirect('../'+slugify(request.user.username))
+

@@ -2,7 +2,25 @@ from django import forms
 from django.utils.datetime_safe import datetime
 from taggit.forms import TagWidget, TagField
 
-from .models import Solution, Subject, Comment
+from .models import Solution, Subject, Comment, UserProfile
+
+class UserProfileForm(forms.ModelForm):
+    description = forms.CharField(
+        max_length=256,
+        widget=forms.Textarea(attrs={
+            'data-length': '256',
+            'id': 'profile_description',
+            'class': 'input-field materialize-textarea',
+            'placeholder': 'Profile description'
+        }), empty_value='',
+        required=False
+    )
+
+    photo = forms.FileField(required=False)
+
+    class Meta:
+        model = UserProfile
+        fields = ('description', 'photo')
 
 
 class CommentForm(forms.ModelForm):

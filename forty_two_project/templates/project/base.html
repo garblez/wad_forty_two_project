@@ -49,8 +49,13 @@
             {% if user.is_authenticated %}
                 <li><a class="dropdown-trigger" href="#"
                        data-target="nav-profile-dropdown">
-                    <i class="material-icons left">account_box</i>
-                    {{ user }}
+                    {% if user_photo %}
+                        <img class="circle" src="{{ user_photo.url }}" alt="account profile"
+                             width="30px" height="30px" style="vertical-align: middle; margin-right: 15px">
+                    {% else %}
+                        <i class="material-icons left">account_box</i>
+                    {% endif %}
+                        {{ user }}
                     <i class="material-icons right">arrow_drop_down</i>
                 </a></li>
             {% else %}

@@ -1,6 +1,8 @@
 from django.conf.urls import url
+from django.conf.urls.static import static
 
 from .views import Index, ShowAnswer, AddSolution, About, Profile, SubjectSolutions, Settings
+import forty_two_project.settings as settings
 
 urlpatterns = [
     url(
@@ -43,3 +45,6 @@ urlpatterns = [
     )
 
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
