@@ -11,6 +11,12 @@ from .models import Solution, Subject, Comment, UserProfile
 from .forms import SolutionForm, CommentForm, UserProfileForm
 
 
+def base_context(request):
+    if request.user and request.user.is_authenticated():
+        return {'user_photo': UserProfile.objects.get(user=request.user).photo}
+    return {}
+
+
 class Index(View):
     def get(self, request, *args, **kwargs):
         context = {
@@ -18,8 +24,7 @@ class Index(View):
             'subjects': Subject.objects.all()
         }
 
-        if request.user and request.user.is_authenticated():
-            context['user_photo'] = UserProfile.objects.get(user=request.user).photo
+        context.update(base_context(request))
 
         return render(request, "index.html", context)
 
@@ -88,6 +93,8 @@ class ShowAnswer(View):
             'form': CommentForm()
         }
 
+        context.update(base_context(request))
+
         return render(request, 'solution.html', context)
 
     # We want to add a new comment
@@ -113,7 +120,7 @@ class ShowAnswer(View):
 # Serve the about page
 class About(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'about.html', {})
+        return render(request, 'about.html', base_context(request))
 
 
 
@@ -131,14 +138,17 @@ class Profile(View):
         # we necessarily generate a profile to display as one does not already exist.
         profile_object, just_created = UserProfile.objects.get_or_create(user=user_object)
 
-
-
-        return render(request, 'profile.html', {
+        context = {
             'profile': profile_object,
-            'comments': Comment.objects.filter(author=user_object)
-        })
+            'comments': Comment.objects.filter(author=user_object),
+        }
+
+        context.update(base_context(request))
+
+        return render(request, 'profile.html', context)
 
 
+# Remove: superfluous
 class SubjectSolutions(View):
     def get(self, request, subject_slug, *args, **kwargs):
         try:
@@ -147,7 +157,7 @@ class SubjectSolutions(View):
             return render(request, 'subject_solutions.html', {
                 'page': {'subject': subject},
                 'subjects': Subject.objects.all()
-            })
+            }.update(base_context(request)))
         except ObjectDoesNotExist:
             return Http404()
 
@@ -161,6 +171,8 @@ class Settings(View):
             'profile_form': UserProfileForm(),
             'user_profile': UserProfile.objects.get(user=request.user)
         }
+
+        context.update(base_context(request))
 
         return render(request, 'settings.html', context)
 
