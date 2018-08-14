@@ -1,8 +1,25 @@
 from django import forms
-from datetime import datetime
+from django.utils.datetime_safe import datetime
 from taggit.forms import TagWidget, TagField
 
-from .models import Solution, Subject
+from .models import Solution, Subject, Comment
+
+
+class CommentForm(forms.ModelForm):
+    content = forms.CharField(
+        max_length=256,
+        widget=forms.Textarea(attrs={
+            'data-length': '256',
+            'id': 'comment_content',
+            'class': 'input-field materialize-textarea validate',
+        }), empty_value='Enter your comment here...'
+    )
+
+    parent_solution_title = forms.CharField(widget=forms.HiddenInput())
+
+    class Meta:
+        model = Comment
+        fields = ('content', 'parent_solution_title')
 
 
 class SolutionForm(forms.ModelForm):

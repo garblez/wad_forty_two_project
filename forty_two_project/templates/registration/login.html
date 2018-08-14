@@ -10,17 +10,17 @@
         <div class="card" style="padding: 1em;">
             <div class="card-content">
         <span class="card-title">
-            <h3>Login</h3>
+            <h3 class="center">Login</h3>
         </span>
                 <form id="login-form" method="post" action=".">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <input type="submit" value="Log in" />
                     <input type="hidden" name="next" value="{{ next }}"/>
                 </form>
-                <div style="text-align: center">
-
-                    <p>Not a member? <a href="{% url 'registration_register' %}">Register</a></p>
+                <div style="text-align: center; padding-top: 1em; padding-bottom: 1em;">
+                    <input type="submit" value="Log in" form="login-form"
+                           class="btn-flat waves-effect waves-red"/>
+                    <p style="padding-top: 1em;">Not a member? <a href="{% url 'registration_register' %}">Register</a></p>
                 </div>
             </div>
         </div>

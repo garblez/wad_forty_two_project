@@ -12,6 +12,7 @@ $(document).ready(function(){
     $('select').formSelect(); // Initialise form 'selection' dropdown fields.
     $('input#sol-title, textarea#sol-description').characterCounter();  // Add a character counter to fields with limits.
 
+
     $('.tooltipped').tooltip();  // Adding tooltips for solution titles (they don't always fit with the grid)
 
     $('.fixed-action-btn').floatingActionButton();  // Initialise the new solution button as a fab

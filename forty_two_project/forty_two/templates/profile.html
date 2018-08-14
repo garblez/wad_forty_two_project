@@ -23,7 +23,7 @@
                     <div class="col s7">
                     <span class="card-title">
                         <h4>
-                    {{ profile.user.username }}
+                            {{ profile.user.username }}
                         </h4>
                     </span>
                         {% if profile.user.email %}
@@ -45,4 +45,40 @@
                 {% endif %}
             </div>
         </div>
+
+        {% if comments %}
+            <p class="center"><b>Comments</b></p>
+            <ul>
+                {% for comment in comments %}
+                    <li>
+                        <div class="card text-flow">
+                            <div class="card-content">
+                                <blockquote style="border-left: 5px solid indigo" class="flow-text truncate">
+                                    {{ comment.content }}
+                                </blockquote>
+                            </div>
+
+                            <div class="card-action">
+
+                                <a href="{% url 'index' %}" class=" black-text">
+                                    {{ comment.parent_solution.subject.title_slug }}
+                                </a>
+                                <a href="{% url 'show_answer' comment.parent_solution.subject.title_slug comment.parent_solution.title_slug %}"
+                                   class=" black-text">
+                                    {{ comment.parent_solution.title_slug }}
+                                </a>
+
+                                <p class="right">
+                                    {{ comment.post_time }}
+                                </p>
+                            </div>
+
+
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <it>This user has made no comments.</it>
+        {% endif %}
 {% endblock %}

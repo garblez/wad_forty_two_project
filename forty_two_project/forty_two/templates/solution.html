@@ -7,32 +7,79 @@
 
 
 {% block content_block %}
-    <div id="solution-card" class="card" style="padding: 3em;">
+    <div id="solution-card" class="card-panel indigo lighten-1 white-text" style="padding: 3em;">
         <div class="card-content">
             <div class="card-title">
                 <div>
-                    <h4 class="truncate">{{ solution.title }}</h4>
+                    <h4 class="flow-text">{{ solution.title }}</h4>
                 </div>
             </div>
             <p style="font-style: italic;">
-                {{ author }}
+                {{ solution.author.username }}
             </p>
-            <p class="flow-text truncate">
+            <h5 class="flow-text">
                 {{ solution.cause }}
-                {{ solution.description }}
-            </p>
-
-            <ul>
-                {% if comments %}
-                    {% for comment in comments %}
-                        <li><i>
-                            {{ comment.author }} {{ comment.content }}
-                        </i></li>
-                    {% endfor %}
-                {% else %}
-                    <i>There are no comments for this solution.</i>
-                {% endif %}
-            </ul>
+            </h5>
+            <blockquote class="flow-text" style="border-left: 5px solid white">
+                <p>{{ solution.description }}</p>
+            </blockquote>
         </div>
     </div>
+
+    {% if user.is_authenticated %}
+        <div id="add-comment" style="text-align: center">
+            <a class="btn-flat waves-effect waves-red modal-trigger" href="#add-comment-modal">Add comment</a>
+        </div>
+    {% endif %}
+
+
+    <ul>
+        {% if comments %}
+            {% for comment in comments %}
+                <li>
+                    <div class="card-panel">
+                        <div class="card-content">
+                            <i>{{ comment.author.username }}</i>
+                            <blockquote class="text-flow" style="border-left: 5px solid indigo">
+                                {{ comment.content }}
+                            </blockquote>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        {% else %}
+            <i>There are no comments for this solution.</i>
+        {% endif %}
+    </ul>
+
+    <!-- Modal Structure for new solution form -->
+    <div id="add-comment-modal" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h4>Comment</h4>
+            <form id="comment_form" method="post" action="">
+                {% csrf_token %}
+                {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+                <div class="row">
+                    <div class="col s12">
+                        {{ form.content.help_text }}
+                        {{ form.content.errors }}
+                        {{ form.content }}
+                    </div>
+                </div>
+                <input type="hidden" value="{{ solution.title_slug }}" name="parent_solution_title">
+            </form>
+        </div>
+        <div class="modal-footer">
+            <div class="modal-close" style="text-align: center">
+                <button type="submit" form="comment_form" value="Submit"
+                        class="waves-effect waves-light btn indigo" style="margin-bottom: 1em;">
+                    Submit Comment
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/base.js' %}"></script>
 {% endblock %}

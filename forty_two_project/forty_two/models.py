@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
+from django.utils.datetime_safe import datetime
 
 
 from taggit.managers import TaggableManager
@@ -35,7 +36,7 @@ class Solution(models.Model):
     title_slug = models.SlugField()  # For use in the URL.
 
     # Refers to which category the solution pertains to: e.g., comp, alt, sci/physics,
-    subject = models.ForeignKey(Subject, null=True)
+    subject = models.ForeignKey(Subject, null=True, on_delete=models.CASCADE)
 
     subject_choice = models.CharField(
         max_length=64, default="computing science"
@@ -62,13 +63,16 @@ class Solution(models.Model):
 
 
 class Comment(models.Model):
-    solution = models.ForeignKey(Solution)
+    parent_solution = models.ForeignKey(Solution, on_delete=models.CASCADE)
+
     author = models.ForeignKey(User, on_delete=models.CASCADE)  # Delete a user's posts when their account is deleted.
-    content = models.CharField(max_length=256)
-    post_time = models.DateTimeField()
+
+    content = models.CharField(max_length=256, null=False)
+
+    post_time = models.DateTimeField(default=datetime.now())
 
     def __str__(self):
-        return "\t".join([str(self.post_time), str(self.solution), str(self.author)])
+        return "\t".join([str(self.post_time), str(self.parent_solution), str(self.author)])
 
     class Meta:
         verbose_name_plural = "comments"

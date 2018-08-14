@@ -1,19 +1,25 @@
 {% if solutions %}
     {% for solution in solutions %}
         <div class="" style="float:left; padding: 1em;">
-            <div id="solution-card" class="card text-flow">
+            <div id="solution-card" class="card" style="max-width: 90%; min-width: 50%">
                 <div class="card-content">
                     <span class="card-title truncate">
                         <a class="flow-text" href="{% url 'show_answer' subject.title_slug solution.title_slug %}">
                             <h5 class="tooltipped flow-text" data-position="top" data-tooltip="{{ solution.title.capitalize }}">
+                                <div class="truncate">
                                 {{ solution.title.capitalize }}
+                                </div>
                             </h5>
                         </a>
                     </span>
-                    {{ solution.cause }}
+                    <div class="truncate">
+                        {{ solution.content }}
+                    </div>
                 </div>
-                <div class="card-action">
-                    {{ solution.author.username }}
+                <div class="card-action" style="padding-bottom: 1.8em;">
+                    <span class="left new badge red" data-badge-caption="">
+                        {{ solution.author.username }}
+                    </span>
                 </div>
             </div>
         </div>

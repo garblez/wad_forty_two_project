@@ -12,3 +12,4 @@ def get_subject_solutions(subject):
         'solutions': Solution.objects.all().filter(subject=subject),
         'subject': subject
     }
+

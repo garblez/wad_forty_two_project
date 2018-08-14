@@ -4,10 +4,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404, HttpResponseRedirect, HttpResponse, HttpResponseForbidden
 from django.utils.text import slugify
 from django.contrib.auth.models import User
-
+from django.utils.datetime_safe import datetime
 
 from .models import Solution, Subject, Comment, UserProfile
-from .forms import SolutionForm
+from .forms import SolutionForm, CommentForm
 
 
 class Index(View):
@@ -28,6 +28,7 @@ class AddSolution(View):
         return render(request, 'page_not_found.html', {})
 
     def post(self, request, *args, **kwargs):
+        # The POSTed form was implicitly inherited from Index.get() (the add solution form's action leads here)
         form = SolutionForm(request.POST)
 
         if form.is_valid():
@@ -77,11 +78,30 @@ class ShowAnswer(View):
         context = {
             'subject': subject,
             'solution': solution,
-            'author': solution.author,
-            'comments': Comment.objects.filter(solution=solution)
+            'comments': Comment.objects.filter(parent_solution=solution),
+            'form': CommentForm()
         }
 
         return render(request, 'solution.html', context)
+
+    # We want to add a new comment
+    def post(self, request, *args, **kwargs):
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            print("New comment form is valid!")
+
+            solution = Solution.objects.get(title_slug=request.POST['parent_solution_title'])
+
+            comment = Comment.objects.create(
+                author=request.user,
+                content=request.POST['content'],
+                parent_solution=solution
+            )
+
+            comment.save()
+            return self.get(request, solution.subject.title_slug, solution.title_slug)
+
 
 
 # Serve the about page
@@ -105,7 +125,12 @@ class Profile(View):
         # we necessarily generate a profile to display as one does not already exist.
         profile_object, just_created = UserProfile.objects.get_or_create(user=user_object)
 
-        return render(request, 'profile.html', {'profile': profile_object})
+
+
+        return render(request, 'profile.html', {
+            'profile': profile_object,
+            'comments': Comment.objects.filter(author=user_object)
+        })
 
 
 class SubjectSolutions(View):
