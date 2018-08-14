@@ -9,7 +9,7 @@
                         <a class="flow-text" href="{% url 'show_answer' subject.title_slug solution.title_slug %}">
                             <h5 class="tooltipped flow-text" data-position="top" data-tooltip="{{ solution.title.capitalize }}">
                                 <div class="truncate">
-                                {{ solution.title.capitalize }}
+                                    {{ solution.title.capitalize }}
                                 </div>
                             </h5>
                         </a>
@@ -19,10 +19,12 @@
                     </div>
                 </div>
                 <div class="card-action row" style="padding-bottom: 1.8em;">
+                    <a href="{% url 'profile' solution.author.username|slugify %}">
                     <span class="col s6 left new badge red" data-badge-caption=""
                           style=" width: fit-content; width: -moz-fit-content">
                         {{ solution.author.username }}
                     </span>
+                    </a>
                     <span class="col s6">
                         {{ solution|count_comments }} comments
                     </span>
