@@ -1,7 +1,7 @@
 from django import template
 from django.template.defaultfilters import slugify
 
-from forty_two.models import Solution, Subject
+from forty_two.models import Solution, Subject, Comment
 
 
 register = template.Library()
@@ -13,3 +13,6 @@ def get_subject_solutions(subject):
         'subject': subject
     }
 
+@register.filter()
+def count_comments(solution):
+    return len(Comment.objects.filter(parent_solution=solution))

@@ -1,7 +1,9 @@
+{% load forty_two_extras %}
+
 {% if solutions %}
     {% for solution in solutions %}
         <div class="" style="float:left; padding: 1em;">
-            <div id="solution-card" class="card" style="max-width: 90%; min-width: 50%">
+            <div id="solution-card" class="card" style="width: fit-content; width: -moz-fit-content">
                 <div class="card-content">
                     <span class="card-title truncate">
                         <a class="flow-text" href="{% url 'show_answer' subject.title_slug solution.title_slug %}">
@@ -16,9 +18,13 @@
                         {{ solution.content }}
                     </div>
                 </div>
-                <div class="card-action" style="padding-bottom: 1.8em;">
-                    <span class="left new badge red" data-badge-caption="">
+                <div class="card-action row" style="padding-bottom: 1.8em;">
+                    <span class="col s6 left new badge red" data-badge-caption=""
+                          style=" width: fit-content; width: -moz-fit-content">
                         {{ solution.author.username }}
+                    </span>
+                    <span class="col s6">
+                        {{ solution|count_comments }} comments
                     </span>
                 </div>
             </div>
