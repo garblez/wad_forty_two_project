@@ -10,13 +10,18 @@
     <div id="solution-card" class="card-panel indigo lighten-1 white-text" style="padding: 3em;">
         <div class="card-content">
             <div class="card-title">
-                <div>
-                    <h4 class="flow-text">{{ solution.title }}</h4>
-                </div>
+                <h5 class="flow-text">{{ solution.title }}</h5>
             </div>
+
+            {% if author_photo %}
+                <div>
+                    <img class="circle" src="{{ author_photo.url }}" alt="Profile picture" width="100px" height="100px">
+                </div>
+            {% endif %}
             <span class="new badge white indigo-text left" data-badge-caption="">
                 {{ solution.author.username }}
-            </span><br/>
+            </span>
+            <br/>
             <h5 class="flow-text">
                 {{ solution.cause }}
             </h5>

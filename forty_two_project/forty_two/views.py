@@ -1,11 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404, HttpResponseRedirect, HttpResponse, HttpResponseForbidden
 from django.utils.text import slugify
 from django.contrib.auth.models import User
-from django.utils.datetime_safe import datetime
-from django.core.files.storage import FileSystemStorage
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib import messages
 
 from .models import Solution, Subject, Comment, UserProfile
 from .forms import SolutionForm, CommentForm, UserProfileForm
@@ -93,6 +95,11 @@ class ShowAnswer(View):
             'form': CommentForm()
         }
 
+        author_profile, just_created = UserProfile.objects.get_or_create(user=solution.author)
+
+        if not just_created and author_profile.photo:
+            context['author_photo'] = author_profile.photo
+
         context.update(base_context(request))
 
         return render(request, 'solution.html', context)
@@ -167,7 +174,9 @@ class Settings(View):
     def get(self, request, username_slug, *args, **kwargs):
         if slugify(request.user.username) != username_slug:
             return HttpResponseForbidden("You cannot access this page unless you are signed in as that user.")
+
         context = {
+            'change_password_form': PasswordChangeForm(request.user),
             'profile_form': UserProfileForm(),
             'user_profile': UserProfile.objects.get(user=request.user)
         }
@@ -192,3 +201,21 @@ class Settings(View):
             user_profile.save()
             return HttpResponseRedirect('../'+slugify(request.user.username))
 
+
+class ChangePassword(View):
+    def post(self, request, *args, **kwargs):
+        print("Made it to the view!")
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Update the session to reflect the password change (stay logged in)
+            messages.success(request, "Password successfully updated.")
+            return redirect('index')
+        else:
+            messages.error(request, 'Error occurred: please correct below')
+            return redirect('..')
+
+    # GET should not occur for this view: it is solely for POSTing the password change form: settings handles the GET
+    # request by rendering the required form, whose action leads here.
+    def get(self, request, *args, **kwargs):
+        return redirect('..')

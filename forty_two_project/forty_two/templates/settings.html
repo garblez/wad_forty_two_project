@@ -7,21 +7,59 @@
 {% endblock %}
 
 {% block content_block %}
-    <form id="user_profile_form" action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% for hidden in profile_form.hidden_fields %}
-            {{ hidden }}
-        {% endfor %}
-        {{ profile_form.description.help_text }}
-        {{ profile_form.description.errors }}
-        {{ profile_form.description }}
+    <div class="container">
+        <h4>Settings</h4>
+        <div class="card">
+            <div class="card-content">
+                <div class="card-title">
+                    Profile
+                </div>
+                <form id="user_profile_form" action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for hidden in profile_form.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
+                    {{ profile_form.description.help_text }}
+                    {{ profile_form.description.errors }}
+                    {{ profile_form.description }}
 
-        {{ profile_form.photo.help_text }}
-        {{ profile_form.photo.errors }}
-        {{ profile_form.photo }}
-    </form>
+                    {{ profile_form.photo.help_text }}
+                    {{ profile_form.photo.errors }}
+                    <div class="file-field input-field">
 
-    <button form="user_profile_form" value="Submit">
-        Save user profile changes
-    </button>
+                        <div class="btn waves-effect indigo">
+                            <span>Upload</span>
+                            <input type="file">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" placeholder="Profile photo">
+                        </div>
+                        {{ profile_form.photo }}
+                    </div>
+                </form>
+                <div class="center">
+                    <button form="user_profile_form" value="Submit" class="btn-flat waves-red waves-effect">
+                        Save profile changes
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-content">
+                <div class="card-title">
+                    <p>Change Password</p>
+                    <form action="{% url 'change_password' %}" method="post" id="change-password-form">
+                        {% csrf_token %}
+                        {{ change_password_form.as_p }}
+                        <div class="center">
+                            <button class="btn-flat waves-effect waves-red" type="submit">
+                                Change password
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -1,8 +1,12 @@
 from django import forms
 from django.utils.datetime_safe import datetime
 from taggit.forms import TagWidget, TagField
+from django.contrib.auth.models import User
+from django.contrib.auth.hashers import check_password
 
 from .models import Solution, Subject, Comment, UserProfile
+
+
 
 class UserProfileForm(forms.ModelForm):
     description = forms.CharField(
@@ -11,7 +15,7 @@ class UserProfileForm(forms.ModelForm):
             'data-length': '256',
             'id': 'profile_description',
             'class': 'input-field materialize-textarea',
-            'placeholder': 'Profile description'
+            'placeholder': 'Profile description',
         }), empty_value='',
         required=False
     )

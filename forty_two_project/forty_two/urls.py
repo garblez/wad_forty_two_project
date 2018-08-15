@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.conf.urls.static import static
 
-from .views import Index, ShowAnswer, AddSolution, About, Profile, SubjectSolutions, Settings
+from .views import Index, ShowAnswer, AddSolution, About, Profile, SubjectSolutions, Settings, ChangePassword
 import forty_two_project.settings as settings
 
 urlpatterns = [
@@ -34,6 +34,10 @@ urlpatterns = [
         Index.as_view(),
         name="index"
     ),
+    url('^profile/change_password/',
+        ChangePassword.as_view(),
+        name='change_password'
+    ),
     url(
         r'^profile/(?P<username>[\w\-]+)/$',
         Profile.as_view(),
@@ -42,7 +46,7 @@ urlpatterns = [
     url('^profile/(?P<username_slug>[\w\-]+)/settings',
         Settings.as_view(),
         name='settings'
-    )
+    ),
 
 ]
 
