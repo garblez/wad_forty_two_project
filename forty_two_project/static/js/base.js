@@ -5,6 +5,8 @@ $(document).ready(function(){
         this.scroll();
     });
 
+    $('.parallax').parallax();
+
     $('.dropdown-trigger').dropdown(); // For the user side menu.
 
 

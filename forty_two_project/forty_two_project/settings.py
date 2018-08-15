@@ -144,3 +144,7 @@ ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_AUTO_LOGIN = True
 LOGIN_REDIRECT_URL = '/home/'  # Take the user to the index page after they log in
 LOGIN_URL = '/accounts/login/'
+
+
+# For taggit manager (tags for solutions)
+TAGGIT_CASE_INSENSITIVE = True

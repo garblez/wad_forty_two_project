@@ -1,9 +1,6 @@
 from django import forms
 from django.utils.datetime_safe import datetime
-from taggit.forms import TagWidget, TagField
-from django.contrib.auth.models import User
-from django.contrib.auth.hashers import check_password
-
+from taggit.forms import TagField, TagWidget
 from .models import Solution, Subject, Comment, UserProfile
 
 
@@ -85,10 +82,13 @@ class SolutionForm(forms.ModelForm):
         widget=forms.HiddenInput(), initial=datetime.now()
     )
 
+    tags = TagField(widget=TagWidget(attrs={
+        'placeholder': 'python, programming, django,..'
+    }), label="Tags")
 
     class Meta:
         model = Solution
-        fields = ("title", 'cause', 'description', 'subject_choice', )
+        fields = ("title", 'cause', 'description', 'subject_choice', 'tags')
         help_texts = {
             'title': 'Give your solution a title',
             'subject_choice': 'Choose subject',

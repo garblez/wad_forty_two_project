@@ -1,0 +1,54 @@
+/* Blockquotes by default should wrap text with hyphens on line breaks. */
+blockquote {
+    border-left: 5px solid indigo;
+    overflow-wrap: break-word;
+}
+
+/* Blockquote variant: side mark is white instead of indigo */
+blockquote.white-side {
+    border-left: 5px solid white;
+    overflow-wrap: break-word;
+}
+
+/* Wrap text with hyphens as line breaks */
+.wrap-text {
+    overflow-wrap: break-word;
+}
+
+/* For the button holding part of modal forms (separated from the modal body by a horizontal rule) */
+.modal-close {
+    padding-bottom: 1em;
+}
+/* Colour the dropdown list items consistently with the rest of the design */
+ul.dropdown-content li a {
+    color: blue;
+}
+
+.italics {
+    font-style: italic;
+}
+
+.main-div {
+    margin: 1em;
+}
+
+/* The profile picture of a signed-in user within the top-right of the navbar */
+.navbar-photo {
+    vertical-align: middle;
+    margin-right: 15px;
+}
+
+body {
+    background-color: rgb(238,245,245);
+}
+
+/* Responsible for the default profile picture size (as it's an SVG, it's rendered like a font). */
+.profile-photo {
+    font-size: 300px;
+}
+
+/* Responsible for the author name display on solution cards on the index page. */
+.solution-card-author {
+    width: fit-content;
+    width: -moz-fit-content;
+}

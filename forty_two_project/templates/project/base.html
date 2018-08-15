@@ -12,10 +12,11 @@
     </title>
 
     <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="{% static 'css/materialize.min.css' %}">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/materialize.min.css' %}">   <!-- Responsible for project aesthetic -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!-- Reference for icons -->
     <link rel="stylesheet" href="https://raw.githubusercontent.com/daneden/animate.css/master/animate.css">
 
+    <link rel="stylesheet" href="{% static 'css/base.css' %}"> <!-- Custom CSS rules for the project -->
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
@@ -24,10 +25,9 @@
     {% block head_block %}
     {% endblock %}
 </head>
-<body style="background-color: rgb(238,245,245);">
 
+<body>
 <nav class="nav-extended indigo">
-
     {% if user.is_authenticated %}
         <ul id="nav-profile-dropdown" class="dropdown-content">
             <li><a href="{% url 'profile' user.username|slugify %}">Profile</a></li>
@@ -50,8 +50,8 @@
                 <li><a class="dropdown-trigger" href="#"
                        data-target="nav-profile-dropdown">
                     {% if user_photo %}
-                        <img class="circle" src="{{ user_photo.url }}" alt="account profile"
-                             width="30px" height="30px" style="vertical-align: middle; margin-right: 15px">
+                        <img class="circle navbar-photo" src="{{ user_photo.url }}" alt="account profile"
+                             width="30px" height="30px" >
                     {% else %}
                         <i class="material-icons left">account_box</i>
                     {% endif %}
@@ -88,12 +88,8 @@
     <li><a href="{% url 'about' %}">About</a></li>
 </ul>
 
-
-
-
-
 <!-- Main block containing page content -->
-<div style="margin: 1em;">
+<div class="main-div">
 {% block content_block %}
 {% endblock %}
 </div>

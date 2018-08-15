@@ -3,25 +3,25 @@
 {% if solutions %}
     {% for solution in solutions %}
         <div class="" style="float:left; padding: 1em;">
-            <div id="solution-card" class="card" style="width: fit-content; width: -moz-fit-content">
+            <div id="solution-card" class="card" style="max-width: 80%; width: fit-content; width: -moz-fit-content">
                 <div class="card-content">
-                    <span class="card-title truncate">
+                    <span class="card-title">
                         <a class="flow-text" href="{% url 'show_answer' subject.title_slug solution.title_slug %}">
                             <h5 class="tooltipped flow-text" data-position="top" data-tooltip="{{ solution.title.capitalize }}">
-                                <div class="truncate">
-                                    {{ solution.title.capitalize }}
+                                <div class="flow-text wrap-text">
+                                    {{ solution.cause.capitalize }}
                                 </div>
                             </h5>
                         </a>
                     </span>
-                    <div class="truncate">
+                    <p class="flow-text wrap-text">
                         {{ solution.content }}
-                    </div>
+                    </p>
                 </div>
                 <div class="card-action row" style="padding-bottom: 1.8em;">
                     <a href="{% url 'profile' solution.author.username|slugify %}">
-                    <span class="col s6 left new badge red" data-badge-caption=""
-                          style=" width: fit-content; width: -moz-fit-content">
+                    <span class="col s6 left new badge red tooltipped" data-tooltip="View profile" data-badge-caption=""
+                          style="width: fit-content; width: -moz-fit-content;">
                         {{ solution.author.username }}
                     </span>
                     </a>
