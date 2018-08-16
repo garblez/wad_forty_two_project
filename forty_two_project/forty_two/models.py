@@ -8,7 +8,7 @@ from taggit.managers import TaggableManager
 
 
 class Subject(models.Model):
-    title = models.CharField(max_length=64, unique=True, primary_key=True)
+    title = models.CharField(max_length=64, unique=True)
 
     title_slug = models.SlugField(default=slugify(title))
 

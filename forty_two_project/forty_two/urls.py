@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from django.conf.urls.static import static
 
+from .models import *
 from .views import Index, ShowAnswer, AddSolution, About, Profile, SubjectSolutions, Settings, ChangePassword
 import forty_two_project.settings as settings
 

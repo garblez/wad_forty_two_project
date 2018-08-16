@@ -37,7 +37,7 @@ SECRET_KEY = '01um70)4k@ft6)nr46e2c*95m)5%8@9re8!c$279r5-#-9d$$^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['Greeble.pythonanywhere.com']
+ALLOWED_HOSTS = ['Greeble.pythonanywhere.com', '127.0.0.1']
 
 
 # Application definition

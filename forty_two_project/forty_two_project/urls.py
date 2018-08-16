@@ -17,8 +17,8 @@ from django.contrib import admin
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.conf import settings
-
 from registration.backends.simple.views import RegistrationView
+
 
 # Define a custom view for registration that redirects the user to the index page on success
 class CustomRegistrationView(RegistrationView):

@@ -1,11 +1,16 @@
 import os
-import django
-
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'forty_two_project.settings')
+
+import django
 django.setup()
 
-# Other import to be found in the main function before populate is called: the above is used to setup and
-# connect to django.
+from django.db.utils import IntegrityError
+from datetime import datetime
+from django.contrib.auth.models import User
+from forty_two.models import Solution, Subject
+from django.template.defaultfilters import slugify
+from taggit.managers import TaggableManager
+
 
 def populate():
     u = create_super_user('mak', '', 'CrabbitPirate')
@@ -80,12 +85,6 @@ def create_super_user(username, email, password):
 
 if __name__ == "__main__":
     print("Starting population script....")
-    from django.db.utils import IntegrityError
-    from datetime import datetime
-    from django.template.defaultfilters import slugify
-    from django.contrib.auth.models import User
-    from forty_two.models import Solution, Subject
-    from taggit.managers import TaggableManager
 
     populate()
     print("..complete!")

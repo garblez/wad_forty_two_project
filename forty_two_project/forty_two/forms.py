@@ -42,14 +42,12 @@ class CommentForm(forms.ModelForm):
 
 
 class SolutionForm(forms.ModelForm):
-    subject_choice = forms.CharField(
-        widget=forms.Select(choices=tuple(
-            (sub.title, sub.title.capitalize()) for sub in Subject.objects.all()),
-            attrs={'class': 'col s4 indigo ',
-                   'id': 'sol-subject-choice'}
-        ),
-        initial=("computing science", 'Computing science'),
-        label="Subject choice"
+
+    subject_choice = forms.ModelChoiceField(
+        queryset=Subject.objects.all(),
+        empty_label="Subject",
+        to_field_name="title",
+        widget=forms.Select(attrs={"'class": 'col s4 indigo', 'id': 'sol-subject-choice'})
     )
 
     title = forms.CharField(
