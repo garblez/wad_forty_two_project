@@ -71,6 +71,36 @@ class Comment(models.Model):
 
     post_time = models.DateTimeField(default=datetime.now())
 
+    # Each user gets one vote of either of the following (which will be tracked in the context of the solution comments)
+    upvoters = models.ManyToManyField(User, related_name='comment_upvoters')  # The users who have 'liked' the comment
+    downvoters = models.ManyToManyField(User, related_name='comment_downvoters')  # The users who have 'disliked' the comment
+
+    # The greater the vote polarity, the better received the comment is and the further up in the comment section it appears
+    def get_vote_polarity(self):
+        return len(self.upvoters) - len(self.downvoters)
+
+    # Only add a user as an upvoter if they haven't already voted
+    def add_upvoter(self, voter):
+        if voter not in self.upvoters and voter not in self.downvoters:
+            self.upvoters.add(voter)
+            self.save()
+
+    # Only remove a user as an upvoter if they were an upvoter.
+    def del_upvoter(self, voter):
+        if voter in self.upvoters:
+            self.upvoters.remove(voter)
+            self.save()
+
+    def add_downvoter(self, voter):
+        if voter not in self.upvoters and voter not in self.downvoters:
+            self.downvoters.add(voter)
+            self.save()
+
+    def del_downvoter(self, voter):
+        if voter in self.downvoters:
+            self.downvoters.remove(voter)
+            self.save()
+
     def __str__(self):
         return "\t".join([str(self.post_time), str(self.parent_solution), str(self.author)])
 

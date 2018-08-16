@@ -25,17 +25,17 @@
                 </div>
                 <div class="col s10">
                     <div class="card-title">
-                        <h1 class="flow-text" style="padding-left: 1em;">{{ solution.title }}</h1>
+                        <h1 class="flow-text" style=" font-size: 26pt">{{ solution.title }}</h1>
                     </div>
                 </div>
             </div>
             <br/>
-            <h5 class="flow-text wrap-text">
-                {{ solution.cause }}
-            </h5>
             <blockquote class="flow-text white-side">
-                <p>{{ solution.description }}</p>
+                {{ solution.cause }}
             </blockquote>
+            <h5 class="flow-text white-side">
+                {{ solution.description }}
+            </h5>
             {% if solution.tags.all %}
                 <div class="row">
                     <div class="col s1">Tags: </div>
@@ -46,12 +46,16 @@
                     </div>
                 </div>
             {% endif %}
+            <br/>
+            {% if not comments %}
+                <p class="italics white-text">There are no comments for this solution.</p>
+            {% endif %}
         </div>
     </div>
 
     {% if user.is_authenticated %}
         <div id="add-comment" class="center">
-            <a class="btn-flat waves-effect waves-red modal-trigger" href="#add-comment-modal">Add comment</a>
+            <a class="btn-flat waves-effect waves-red modal-trigger indigo white-text" href="#add-comment-modal">Add comment</a>
         </div>
     {% endif %}
     <ul>
@@ -61,15 +65,23 @@
                     <div class="card-panel">
                         <div class="card-content">
                             <i>{{ comment.author.username }}</i>
-                            <blockquote class="flow-text wrap-text">
-                                {{ comment.content }}
-                            </blockquote>
+                            <div class="row">
+                                <div class="col s1">
+                                    <ul>
+                                        <li><i class="material-icons">expand_less</i></li>
+                                        <li>0</li>
+                                        <li><i class="material-icons">expand_more</i></li>
+                                    </ul>
+                                </div>
+
+                                <blockquote class="flow-text wrap-text col s11">
+                                    {{ comment.content }}
+                                </blockquote>
+                            </div>
                         </div>
                     </div>
                 </li>
             {% endfor %}
-        {% else %}
-            <i>There are no comments for this solution.</i>
         {% endif %}
     </ul>
     <!-- Modal Structure for new solution form -->

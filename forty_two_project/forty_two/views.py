@@ -14,9 +14,11 @@ from .forms import SolutionForm, CommentForm, UserProfileForm
 
 
 def base_context(request):
+    context = {}
     if request.user and request.user.is_authenticated():
-        return {'user_photo': UserProfile.objects.get(user=request.user).photo}
-    return {}
+        profile, just_created = UserProfile.objects.get_or_create(user=request.user)
+        context['user_photo'] = profile.photo
+    return context
 
 
 class Index(View):
@@ -26,7 +28,8 @@ class Index(View):
             'subjects': Subject.objects.all()
         }
 
-        context.update(base_context(request))
+        if request.user.is_authenticated():
+            context.update(base_context(request))
 
         return render(request, "index.html", context)
 
@@ -88,10 +91,12 @@ class ShowAnswer(View):
             }
             return render(request, 'page_not_found.html', not_found_context)
 
+        related_comments = Comment.objects.filter(parent_solution=solution)
+
         context = {
             'subject': subject,
             'solution': solution,
-            'comments': Comment.objects.filter(parent_solution=solution),
+            'comments': related_comments,
             'form': CommentForm()
         }
 

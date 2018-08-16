@@ -39,7 +39,7 @@ ul.dropdown-content li a {
 }
 
 body {
-    background-color: rgb(238,245,245);
+    background: url("../images/maze.jpg");
 }
 
 /* Responsible for the default profile picture size (as it's an SVG, it's rendered like a font). */

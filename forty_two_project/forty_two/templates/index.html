@@ -36,7 +36,7 @@
 
         {% for subject in subjects %}
             <div id="{{ subject.title_slug }}">
-                <div class="row">
+                <div class="center-block" style="flex-flow: row">
                     <!-- Put a template tag here -->
                     {% get_subject_solutions subject %}
                 </div>
