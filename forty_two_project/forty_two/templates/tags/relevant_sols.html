@@ -6,7 +6,7 @@
             <div id="solution-card" class="card" style="max-width: 80%; width: fit-content; width: -moz-fit-content">
                 <div class="card-content">
                     <span class="card-title">
-                        <a class="flow-text" href="{% url 'show_answer' subject.title_slug solution.title_slug %}">
+                        <a class="flow-text" href="{% url 'show_answer' solution.subject.title_slug solution.title_slug %}">
                             <h5 class="tooltipped flow-text" data-position="top" data-tooltip="{{ solution.title.capitalize }}">
                                 <div class="flow-text wrap-text">
                                     {{ solution.cause.capitalize }}

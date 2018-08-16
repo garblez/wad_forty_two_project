@@ -27,34 +27,33 @@ def populate():
     computing_sol = add_sol(
         user_aaron,
         datetime.now(),
-        "Just a title for this solution",
+        "One line functions",
         computing_sub,
         "I needed a one-line function to reverse any string argument",
         "I simply created the following:\nreverse = lambda x: x[::-1]"
     )
 
+    computing_sol1 = add_sol(
+        user_claire,
+        datetime.now(),
+        "Database Migrations",
+        computing_sub,
+        "I couldn't migrate my database.",
+        """I removed all __pycache__ directories and migrations directories from my project, makemigrations and migrated for the project (manage.py migrate project_name) and then for my app."""
+    )
+
     physics_sol = add_sol(
         user_brian,
         datetime.now(),
-        "Yet another title for another solution",
+        "Matlab help",
         physics_sub,
         "I needed some way to document what I was doing inside a matlab script without it being read by matlab",
         "Matlab allows you to comment using %. The comment starts where % is and ends at the end of the line."
     )
 
-    maths_sol = add_sol(
-        user_claire,
-        datetime.now(),
-        "Proper and Formal Title Befitting of a Mathematician Writing in the Wrong Register",
-        maths_sub,
-        "Came across a latex parsing error when trying to write the curl of F using the nabla cross product.",
-        "Just use \\noit{curl}F."
-    )
-
     computing_sol.tags.add("programming", "python", "strings", "reverse", "scripting")
     physics_sol.tags.add("matlab", "comments", "explanation", "inline explanation", "programming")
-    maths_sol.tags.add("calculus 3", "curl", "vector fields", "partial derivatives", "latex", "typesetting", "nabla",
-                       "format error")
+
 
 
 def add_sub(title):

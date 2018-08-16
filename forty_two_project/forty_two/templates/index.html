@@ -24,10 +24,8 @@
         <div id="sol-search">
             <div class="input-field card-panel">
                 <div class="card-content">
-                    <input id="search" type="search">
-                    <label class="label-icon" for="search">
-                    </label>
-                    <i class="material-icons" style="padding-top: 4px; padding-right: 4px">close</i>
+                    {% csrf_token %}
+                    <input type="text" id="search">
                 </div>
             </div>
         </div>
@@ -36,7 +34,7 @@
             <div id="{{ subject.title_slug }}">
                 <div class="center-block" style="flex-flow: row">
                     <!-- Put a template tag here -->
-                    {% get_subject_solutions subject %}
+                    {% get_solutions subject search_text %}
                 </div>
             </div>
         {% endfor %}
@@ -105,4 +103,7 @@
             </a>
         </div>
     {% endif %}
+{% endblock %}
+{% block included_js_block %}
+<script type="text/javascript" src="{% static 'js/ajax.js' %}"></script>
 {% endblock %}

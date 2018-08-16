@@ -1,10 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 from django.views import View
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404, HttpResponseRedirect, HttpResponse, HttpResponseForbidden
 from django.utils.text import slugify
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
@@ -25,17 +24,27 @@ class Index(View):
     def get(self, request, *args, **kwargs):
         context = {
             'form': SolutionForm(),  # Empty form for the `answer` modal to be POSTed
-            'subjects': Subject.objects.all()
+            'subjects': Subject.objects.all(),
+            'search_text': ''
         }
 
         if request.user.is_authenticated():
             context.update(base_context(request))
 
-        return render(request, "index.html", context)
+        return render_to_response("index.html", context)
 
-    # TODO: Add a more appropriate post method to handle post requests to the index
+
     def post(self, request, *args, **kwargs):
-        return Http404()
+        context = {
+            'form': SolutionForm(),  # Empty form for the `answer` modal to be POSTed
+            'subjects': Subject.objects.all(),
+            'search_text': request.POST['search_text']
+        }
+
+        if request.user.is_authenticated():
+            context.update(base_context(request))
+
+        return render_to_response('index.html', context)
 
 
 class AddSolution(View):
