@@ -6,7 +6,7 @@
 {% block content_block %}
     <div id="solution-card" class="card-panel indigo lighten-1 white-text" style="padding: 3em;">
         <div class="card-content">
-            <div class="row">
+            <div class="row hide-on-small-and-down">
                 <div class="col s2">
                     {% if author_photo %}
                         <div>
@@ -25,11 +25,30 @@
                 </div>
                 <div class="col s10">
                     <div class="card-title">
-                        <h1 class="flow-text" style=" font-size: 26pt">{{ solution.title }}</h1>
+                        <h1 class="flow-text wrap-text" style="padding-left: 10%;">{{ solution.title }}</h1>
                     </div>
                 </div>
             </div>
-            <br/>
+
+            <div class="hide-on-med-and-up">
+                <div class="row center">
+                    {% if author_photo %}
+                        <img class="circle" src="{{ author_photo.url }}" alt="Profile picture" width="100px" height="100px">
+                    {% else %}
+                        <i class="material-icons large" style="width: 100px; height: 100px">account_box</i>
+                    {% endif %}
+                    <div class="row center">
+                        <div class="new badge white indigo-text" data-badge-caption="">
+                            {{ solution.author.username }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="card-title">
+                        <h1 class="flow-text wrap-text">{{ solution.title }}</h1>
+                    </div>
+                </div>
+            </div>
             <blockquote class="flow-text white-side">
                 {{ solution.cause }}
             </blockquote>

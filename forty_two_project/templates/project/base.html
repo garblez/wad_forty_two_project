@@ -38,10 +38,15 @@
     {% endif %}
 
     <div class="nav-wrapper">
-        <a href="{% url 'index' %}" class="brand-logo">
+        <a href="{% url 'index' %}" class="brand-logo flow-text hide-on-small-and-down">
             <i class="large material-icons">chevron_right</i>
             Forty Two
         </a>
+        <a href="{% url 'index' %}" class="brand-logo flow-text hide-on-med-and-up">
+            <i class="large material-icons">chevron_right</i>
+            42
+        </a>
+
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
         <ul id="nav-mobile" class="right hide-on-med-and-down">

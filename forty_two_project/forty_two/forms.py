@@ -88,7 +88,7 @@ class SolutionForm(forms.ModelForm):
 
     class Meta:
         model = Solution
-        fields = ("title", 'cause', 'description', 'subject_choice', 'tags')
+        fields = ("title", 'cause', 'description', 'tags', 'subject_choice')
         help_texts = {
             'title': 'Give your solution a title',
             'subject_choice': 'Choose subject',
