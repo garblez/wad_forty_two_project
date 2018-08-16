@@ -43,3 +43,9 @@ Python world timezone definitions library. Created by Stuart Bishop.
 
 A modern front-end CSS framework based on Google's Material Design philosophy.
 
+
+[Mike Hibbert](https://www.youtube.com/watch?v=jKSNciGr8kY) also provided some insight into AJAX in Django
+and search functions.
+
+---
+##### Log-in details may be found within the population script.
