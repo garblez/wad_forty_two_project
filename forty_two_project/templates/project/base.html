@@ -81,16 +81,18 @@
 
 <ul class="sidenav" id="mobile-demo">
     {% block sidenav_subjects_block %}
-
+    <li><a href="{% url 'index' %}">Home</a></li>
     {% endblock %}
+    <li><a href="{% url 'about' %}">About</a></li>
     <li class="divider"></li>
     {% if user.is_authenticated %}
-        <li><a href="{% url 'profile' user.username %}">{{ user.username }}</a></li>
+        <li><a href="{% url 'profile' user.username|slugify %}">{{ user.username }}</a></li>
+        <li><a href="{% url 'settings' user.username|slugify %}">Settings</a></li>
         <li><a href="{% url 'auth_logout' %}">Log out</a></li>
     {% else %}
         <li><a href="{% url 'auth_login' %}">Log in</a></li>
     {% endif %}
-    <li><a href="{% url 'about' %}">About</a></li>
+
 </ul>
 
 <!-- Main block containing page content -->

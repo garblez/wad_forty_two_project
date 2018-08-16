@@ -23,6 +23,7 @@ def populate():
     physics_sub = add_sub("physics")
     maths_sub = add_sub("mathematics")
 
+
     computing_sol = add_sol(
         user_aaron,
         datetime.now(),
@@ -54,6 +55,7 @@ def populate():
     physics_sol.tags.add("matlab", "comments", "explanation", "inline explanation", "programming")
     maths_sol.tags.add("calculus 3", "curl", "vector fields", "partial derivatives", "latex", "typesetting", "nabla",
                        "format error")
+
 
 def add_sub(title):
     sub, result = Subject.objects.get_or_create(title=title)

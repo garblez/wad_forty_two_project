@@ -19,9 +19,7 @@
         </div>
     </div>
 {% endblock %}
-
 {% block content_block %}
-
     <div class="container">
         <div id="sol-search">
             <div class="input-field card-panel">
@@ -43,7 +41,6 @@
             </div>
         {% endfor %}
     </div>
-
     <!-- Modal Structure -->
     <div id="new-sol-modal" class="modal modal-fixed-footer">
         <div class="modal-content">
@@ -91,7 +88,6 @@
                     </div>
                 </div>
             </form>
-
         </div>
         <div class="modal-footer">
             <div class="modal-close center">
@@ -102,7 +98,6 @@
             </div>
         </div>
     </div>
-
     {% if user.is_authenticated %}
         <div class="fixed-action-btn">
             <a class="btn-floating btn-large red modal-trigger" href="#new-sol-modal">
