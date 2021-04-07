@@ -1,5 +1,8 @@
 # 42 Project ReadMe
 
+# Clarity
+Project for my Web Application Development project in second year at university. FortyTwo was intended to be a "Answer and Question" website where solutions to problems are posted in a Quora style format.
+
 ## External Resources
 
 [gitignore.io](https://www.gitignore.io/)
