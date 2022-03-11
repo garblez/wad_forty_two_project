@@ -1,5 +1,5 @@
 Django==1.11
 django-registration-redux==2.4
 django-taggit==0.22.2
-Pillow==5.2.0
+Pillow==9.0.1
 pytz==2018.5
